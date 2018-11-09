@@ -8,6 +8,9 @@
  */
 
 #include "main.h"
+#include "modules/drive.c"
+#include "modules/claw.c"
+#include "modules/shooter.c"
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the
@@ -26,9 +29,11 @@
  *
  * This task should never exit; it should end with some kind of infinite loop, even if empty.
  */
+
 void operatorControl() {
 	while (1) {
-		printf("Hello PROS User!\n");
-		delay(20);
+		drive_control(); // Init drive functions
+		claw_control(); // Init claw functions
+		shooter_control(); // Init shooter functions
 	}
 }
