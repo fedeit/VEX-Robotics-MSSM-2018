@@ -26,6 +26,6 @@ void loadBall() {
 
 void shootBall() {
     motorSet(shooterMotor, 127);
-    delay(800);
+    delay(shootTime);
     motorStop(shooterMotor);
 }

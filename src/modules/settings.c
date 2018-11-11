@@ -30,9 +30,10 @@ int leftAnalogCtrl = 3;
 int rightAnalogCtrl = 2;
 
 //+++++++++++++ MECHANICAL/TIME  ANTS +++++++++++++ //
-// Time  s, TO BE CALIBRATED, unit of measure is ms
+// Times, TO BE CALIBRATED, unit of measure is ms
 int flipRotationTime = 251;
 int liftSmallStepTime = 1000;
 int fullExtensionTime = 1000;
 int fullRetractionTime = 1000;
 int levelUpTime = 1300;
+int shootTime = 800
