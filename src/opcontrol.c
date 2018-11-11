@@ -9,9 +9,9 @@
 
 #include "main.h"
 #include "settings.h"
-#include "modules/drive.c"
-#include "modules/claw.c"
-#include "modules/shooter.c"
+#include "drive.h"
+#include "claw.h"
+#include "shooter.h"
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the

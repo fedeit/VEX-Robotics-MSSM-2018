@@ -9,34 +9,33 @@
 
 // Motors ports assignments
 // Ball shooter system
-const int shooterMotor = 2;
+extern int shooterMotor;
 // Claw lift system
-const int clawLiftBottomLeft = 5;
-const int clawLiftBottomRight = 6;
-const int clawLiftTopLeft = 7;
-const int clawLiftTopRight = 8;
+extern int clawLiftBottomLeft;
+extern int clawLiftBottomRight;
+extern int clawLiftTopLeft;
+extern int clawLiftTopRight;
 // Claw control motors: extension and flipping
-const int clawExtendMotor = 9;
-const int clawFlipMotor = 10;
+extern int clawExtendMotor;
+extern int clawFlipMotor;
 // Base movement wheel motors
-const short rightDrivingWheel = 3;
-const short leftDrivingWheel = 4;
+extern int rightDrivingWheel;
+extern int leftDrivingWheel;
 
 //+++++++++++++ CONTROLLER ASSIGNMENTS ++++++++++++++++ //
-int joystickId = 1;
-const int liftGroup = 5;
-const int clawGroup = 7;
-const int slingGroup = 8;
-const int leftAnalogCtrl = 3;
-const int rightAnalogCtrl = 2;
+extern int joystickId;
+extern int liftGroup;
+extern int clawGroup;
+extern int slingGroup;
+extern int leftAnalogCtrl;
+extern int rightAnalogCtrl;
 
-//+++++++++++++ MECHANICAL/TIME CONSTANTS +++++++++++++ //
-// Time consts, TO BE CALIBRATED, unit of measure is ms
-const int flipRotationTime = 1000;
-const int liftSmallStepTime = 1000;
-const int fullExtensionTime = 500;
-const int fullRetractionTime = 500;
-const int levelUpTime = 1500;
-
+//+++++++++++++ MECHANICAL/TIME  ANTS +++++++++++++ //
+// Time  s, TO BE CALIBRATED, unit of measure is ms
+extern int flipRotationTime ;
+extern int liftSmallStepTime;
+extern int fullExtensionTime;
+extern int fullRetractionTime;
+extern int levelUpTime;
 
 #endif // SETTINGS_H_

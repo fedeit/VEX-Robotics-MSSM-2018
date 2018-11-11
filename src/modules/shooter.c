@@ -21,7 +21,7 @@ void shooterControl() {
 }
 
 void loadBall() {
-    
+  // Loading ball
 }
 
 void shootBall() {
