@@ -1,11 +1,9 @@
 //
 //  consts.c
-//  
-//  This file contains the ports assignments for all the motors of the vehicle
-//  Created by Federico Galbiati on 10/11/2018.
 //
-
-#include "main.h"
+//  This file contains all the settings for the vehicle
+//  Created by Federico Galbiati and Alex Nikanov on 10/11/2018.
+//
 
 // Ball shooter system
 const int shooterMotor = 2;
@@ -22,4 +20,3 @@ const short rightDrivingWheel = 3;
 const short leftDrivingWheel = 4;
 
 // joystick identifier
-const  int
