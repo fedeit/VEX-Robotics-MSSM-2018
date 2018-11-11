@@ -30,7 +30,7 @@ const short leftDrivingWheel = 4;
 const int joystickId = 1;
 const int liftGroup = 5;
 const int clawGroup = 7;
-const int slingGroup = 6;
+const int slingGroup = 8;
 const int leftAnalogCtrl = 3;
 const int rightAnalogCtrl = 2;
 

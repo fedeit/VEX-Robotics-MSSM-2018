@@ -11,4 +11,17 @@
 
 void shooterControl() {
   // Shooting control
+    if (joystickGetDigital(joystickId, slingGroup, JOY_DOWN)) {
+        // Load ball
+    } else if (joystickGetDigital(joystickId, slingGroup, JOY_UP)) {
+        //Shoot ball
+    }
+}
+
+void loadBall() {
+    
+}
+
+void shootBall() {
+    
 }
