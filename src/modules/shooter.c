@@ -13,8 +13,10 @@ void shooterControl() {
   // Shooting control
     if (joystickGetDigital(joystickId, slingGroup, JOY_DOWN)) {
         // Load ball
+        loadBall();
     } else if (joystickGetDigital(joystickId, slingGroup, JOY_UP)) {
         //Shoot ball
+        shootBall();
     }
 }
 
@@ -23,5 +25,7 @@ void loadBall() {
 }
 
 void shootBall() {
-    
+    motorSet(shooterMotor, 127);
+    delay(800);
+    motorStop(shooterMotor);
 }
