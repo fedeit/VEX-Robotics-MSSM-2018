@@ -23,7 +23,7 @@ const short rightDrivingWheel = 3;
 const short leftDrivingWheel = 4;
 
 //+++++++++++++ CONTROLLER ASSIGNMENTS ++++++++++++++++ //
-const int joystickId = 1;
+int joystickId = 1;
 const int liftGroup = 5;
 const int clawGroup = 7;
 const int slingGroup = 8;
