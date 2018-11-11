@@ -20,6 +20,8 @@ const int clawFlipMotor = 10;
 // Base movement wheel motors
 const short rightDrivingWheel = 3;
 const short leftDrivingWheel = 4;
-
-// joystick identifier
-const  int
+// joystick identifiers
+const int joystickId = 1;
+const int liftGroup = 5;
+const int clawGroup = 7;
+const int slingGroup = 6;
