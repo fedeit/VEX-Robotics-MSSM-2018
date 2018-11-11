@@ -1,12 +1,15 @@
+// TODO:
+  // Move to header file?
+  // Move to c++ - to extract constant tuples as funcs vars (for controller's identifiers)
+
 //
-//  consts.c
-//  
-//  This file contains the ports assignments for all the motors of the vehicle
-//  Created by Federico Galbiati on 10/11/2018.
+//  settings.c
+//
+//  This file contains all the settings for the vehicle
+//  Created by Federico Galbiati and Alex Nikanov on 10/11/2018.
 //
 
-#include "main.h"
-
+// Motors ports assignments
 // Ball shooter system
 const int shooterMotor = 2;
 // Claw lift system
@@ -20,7 +23,7 @@ const int clawFlipMotor = 10;
 // Base movement wheel motors
 const short rightDrivingWheel = 3;
 const short leftDrivingWheel = 4;
-// joystick identifiers
+// controllers assignments
 const int joystickId = 1;
 const int liftGroup = 5;
 const int clawGroup = 7;
