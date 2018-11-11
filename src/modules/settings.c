@@ -33,3 +33,5 @@ const int slingGroup = 6;
 // Time consts, TO BE CALIBRATED, unit of measure is ms
 const int flipRotationTime = 1000;
 const int liftSmallStepTime = 1000;
+const int fullExtensionTime = 500;
+const int fullRetractionTime = 500;

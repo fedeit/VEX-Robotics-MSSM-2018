@@ -37,3 +37,15 @@ void flipLeft() {
     delay(flipRotationTime);
     motorStop(clawFlipMotor);
 }
+
+void extendClaw() {
+    motorSet(clawExtendMotor, 110);
+    delay(fullExtensionTime);
+    motorStop(clawExtendMotor);
+}
+
+void extendClaw() {
+    motorSet(clawExtendMotor, -110);
+    delay(fullRetractionTime);
+    motorStop(clawExtendMotor);
+}
