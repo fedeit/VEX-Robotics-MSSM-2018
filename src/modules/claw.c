@@ -44,7 +44,7 @@ void extendClaw() {
     motorStop(clawExtendMotor);
 }
 
-void extendClaw() {
+void retractClaw() {
     motorSet(clawExtendMotor, -110);
     delay(fullRetractionTime);
     motorStop(clawExtendMotor);
