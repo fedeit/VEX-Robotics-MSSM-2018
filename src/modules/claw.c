@@ -12,14 +12,12 @@
 void clawControl() {
     if (joystickGetDigital(joystickId, clawGroup, JOY_UP)) {
         extendClaw();
-    }
-    if (joystickGetDigital(joystickId, clawGroup, JOY_DOWN)) {
+    } else if (joystickGetDigital(joystickId, clawGroup, JOY_DOWN)) {
         retractClaw();
     }
     if (joystickGetDigital(joystickId, clawGroup, JOY_RIGHT)) {
         flipRight();
-    }
-    if (joystickGetDigital(joystickId, clawGroup, JOY_LEFT)) {
+    } else if (joystickGetDigital(joystickId, clawGroup, JOY_LEFT)) {
         flipLeft();
     }
 }
