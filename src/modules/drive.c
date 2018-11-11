@@ -6,8 +6,8 @@
 //
 
 #include "main.h"
+#include "settings.h"
 #include "drive.h"
-#include "settings.c"
 
 // Main drive control function
 void drive_control(){

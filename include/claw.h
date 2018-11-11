@@ -1,8 +1,8 @@
-#ifndef CLAW_H
-#define CLAW_H
+#ifndef CLAW_H_
+#define CLAW_H_
 
 #include "main.h"
 
 void claw_control();
 
-#endif //CLAW_H
+#endif //CLAW_H_
