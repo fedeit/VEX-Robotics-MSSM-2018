@@ -9,6 +9,6 @@
 #include "settings.h"
 #include "shooter.h"
 
-void shooter_control() {
+void shooterControl() {
   // Shooting control
 }

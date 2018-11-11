@@ -3,6 +3,6 @@
 
 #include "main.h"
 
-void shooter_control();
+void shooterControl();
 
 #endif //SHOOTER_H_
