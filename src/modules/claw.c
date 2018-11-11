@@ -48,7 +48,7 @@ void retractClaw() {
     motorStop(clawExtendMotor);
 }
 
-// Lift by levels
+// Lift by defined levels, need to be calibrated
 void liftOneLevelUp() {
     motorSet(clawLiftBottomLeft, 120);
     motorSet(clawLiftTopLeft, 120);
