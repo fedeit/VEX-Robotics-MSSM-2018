@@ -7,7 +7,7 @@
 
 #include "main.h"
 #include "claw.h"
-#include "settings.c"
+#include "settings.h"
 
 void clawControl() {
     if (joystickGetDigital(joystickId, clawGroup, JOY_UP)) {
