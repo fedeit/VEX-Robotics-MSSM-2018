@@ -32,6 +32,11 @@
  */
 
 void operatorControl() {
+    if isJoystickConnected(1) {
+        joystickId = 1;
+    } else if isJoystickConnected(2) {
+        joystickId = 2;
+    }
 	while (1) {
         driveControl(); // Init drive functions
         clawControl(); // Init claw functions

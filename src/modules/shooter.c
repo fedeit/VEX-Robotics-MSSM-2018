@@ -10,7 +10,7 @@
 #include "shooter.h"
 
 void shooterControl() {
-  // Shooting control
+    // Shooting control
     if (joystickGetDigital(joystickId, slingGroup, JOY_DOWN)) {
         // Load ball
         loadBall();
