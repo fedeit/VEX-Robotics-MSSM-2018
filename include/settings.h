@@ -38,9 +38,7 @@ const int flipRotationTime = 1000;
 const int liftSmallStepTime = 1000;
 const int fullExtensionTime = 500;
 const int fullRetractionTime = 500;
-<<<<<<< HEAD:src/modules/settings.c
 const int levelUpTime = 1500;
 =======
 
 #endif // SETTINGS_H_
->>>>>>> master:include/settings.h
