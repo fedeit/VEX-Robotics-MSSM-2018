@@ -15,10 +15,17 @@ void clawControl() {
     } else if (joystickGetDigital(joystickId, clawGroup, JOY_DOWN)) {
         retractClaw();
     }
+    
     if (joystickGetDigital(joystickId, clawGroup, JOY_RIGHT)) {
         flipRight();
     } else if (joystickGetDigital(joystickId, clawGroup, JOY_LEFT)) {
         flipLeft();
+    }
+    
+    if (joystickGetDigital(joystickId, liftGroup, JOY_UP)) {
+        liftOneLevelUp();
+    } else if (joystickGetDigital(joystickId, liftGroup, JOY_DOWN)) {
+        liftOneLevelDown();
     }
 }
 
