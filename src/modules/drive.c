@@ -17,7 +17,7 @@ void driveControl() {
 
 void tankMoveLeftMotors() {
     int speed = joystickGetAnalog(joystickId, leftAnalogCtrl);
-    motorSet(leftDrivingWheel, speed);
+    motorSet(leftDrivingWheel, -speed);
 }
 
 void tankMoveRightMotors() {
