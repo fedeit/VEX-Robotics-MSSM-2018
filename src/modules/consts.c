@@ -25,3 +25,5 @@ const int joystickId = 1;
 const int liftGroup = 5;
 const int clawGroup = 7;
 const int slingGroup = 6;
+
+// Move to header file?
