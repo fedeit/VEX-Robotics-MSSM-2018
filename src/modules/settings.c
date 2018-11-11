@@ -7,15 +7,16 @@
 #include "main.h"
 #include "settings.h"
 
-int shooterMotor = 2;
+// Shooter system
+int shooterMotor = 10;
 // Claw lift system
-int clawLiftBottomLeft = 5;
-int clawLiftBottomRight = 6;
+int clawLiftBottomLeft = 6;
+int clawLiftBottomRight = 5;
 int clawLiftTopLeft = 7;
 int clawLiftTopRight = 8;
 // Claw control motors: extension and flipping
 int clawExtendMotor = 9;
-int clawFlipMotor = 10;
+int clawFlipMotor = 2;
 // Base movement wheel motors
 int rightDrivingWheel = 4;
 int leftDrivingWheel = 3;
@@ -30,8 +31,8 @@ int rightAnalogCtrl = 2;
 
 //+++++++++++++ MECHANICAL/TIME  ANTS +++++++++++++ //
 // Time  s, TO BE CALIBRATED, unit of measure is ms
-int flipRotationTime = 1000;
+int flipRotationTime = 251;
 int liftSmallStepTime = 1000;
-int fullExtensionTime = 500;
-int fullRetractionTime = 500;
-int levelUpTime = 1500;
+int fullExtensionTime = 1000;
+int fullRetractionTime = 1000;
+int levelUpTime = 1300;
