@@ -1,9 +1,4 @@
-// TODO:
-  // Move to header file?
-  // Move to c++ - to extract constant tuples as funcs vars (for controller's identifiers)
-
-//
-//  settings.c
+//  settings.h
 //
 //  This file contains all the settings for the vehicle
 //  Created by Federico Galbiati and Alex Nikanov on 10/11/2018.
