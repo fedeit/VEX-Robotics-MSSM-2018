@@ -35,3 +35,4 @@ const int flipRotationTime = 1000;
 const int liftSmallStepTime = 1000;
 const int fullExtensionTime = 500;
 const int fullRetractionTime = 500;
+const int levelUpTime = 1500;
