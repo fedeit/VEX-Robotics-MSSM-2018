@@ -6,8 +6,8 @@
 //
 
 #include "main.h"
+#include "settings.h"
 #include "claw.h"
-#include "settings.c"
 
 void claw_control(){
   int lifter = joystickGetAnalog(1, ACCEL_Y); // Vertical axis left joystick (just 2?)
@@ -22,15 +22,4 @@ void claw_control(){
   motorSet(clawExtendMotor, extender);
 
   motorSet(clawFlipMotor, flipper);
-}
-
-
-void tankMoveLeftMotors() {
-    int speed = joystickGetAnalog(joystickId, 3);
-    motorSet(leftDrivingWheel, speed);
-}
-
-void tankMoveRightMotors() {
-    int speed = joystickGetAnalog(joystickId, 2);
-    motorSet(rightDrivingWheel, speed);
 }

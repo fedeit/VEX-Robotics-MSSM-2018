@@ -9,6 +9,9 @@
 //  Created by Federico Galbiati and Alex Nikanov on 10/11/2018.
 //
 
+#ifndef SETTINGS_H_
+#define SETTINGS_H_
+
 // Motors ports assignments
 // Ball shooter system
 const int shooterMotor = 2;
@@ -28,3 +31,5 @@ const int joystickId = 1;
 const int liftGroup = 5;
 const int clawGroup = 7;
 const int slingGroup = 6;
+
+#endif // SETTINGS_H_

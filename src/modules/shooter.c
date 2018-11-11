@@ -6,8 +6,8 @@
 //
 
 #include "main.h"
+#include "settings.h"
 #include "shooter.h"
-#include "settings.c"
 
 void shooter_control() {
   // Shooting control

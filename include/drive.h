@@ -1,5 +1,5 @@
-#ifndef DRIVE_H
-#define DRIVE_H
+#ifndef DRIVE_H_
+#define DRIVE_H_
 
 #include "main.h"
 
@@ -9,4 +9,4 @@ void tankMoveLeftMotors();
 
 void tankMoveRightMotors();
 
-#endif // DRIVE_H
+#endif // DRIVE_H_
