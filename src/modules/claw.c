@@ -27,13 +27,13 @@
 //
 
 void flipRight() {
-    motorSet(clawFlipMotor, 100); // Set motor to speed 100 (right), not max speed (127) because it might be unstable...
+    motorSet(clawFlipMotor, 110); // Set motor to speed 100 (right), not max speed (127) because it might be unstable...
     delay(flipRotationTime);
     motorStop(clawFlipMotor);
 }
 
 void flipLeft() {
-    motorSet(clawFlipMotor, -100);
+    motorSet(clawFlipMotor, -110);
     delay(flipRotationTime);
     motorStop(clawFlipMotor);
 }
