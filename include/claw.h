@@ -5,4 +5,12 @@
 
 void claw_control();
 
+void flipRight();
+
+void flipLeft();
+
+void extendClaw();
+
+void retractClaw();
+
 #endif //CLAW_H_
