@@ -6,8 +6,28 @@
 //
 
 #include "main.h"
-#include "settings.h"
 #include "claw.h"
+#include "settings.h"
+
+void clawControl() {
+    if (joystickGetDigital(joystickId, clawGroup, JOY_UP)) {
+        extendClaw();
+    } else if (joystickGetDigital(joystickId, clawGroup, JOY_DOWN)) {
+        retractClaw();
+    }
+
+    if (joystickGetDigital(joystickId, clawGroup, JOY_RIGHT)) {
+        flipRight();
+    } else if (joystickGetDigital(joystickId, clawGroup, JOY_LEFT)) {
+        flipLeft();
+    }
+
+    if (joystickGetDigital(joystickId, liftGroup, JOY_UP)) {
+        liftOneLevelUp();
+    } else if (joystickGetDigital(joystickId, liftGroup, JOY_DOWN)) {
+        liftOneLevelDown();
+    }
+}
 
 void flipRight() {
     motorSet(clawFlipMotor, 110); // Set motor to speed 100 (right), not max speed (127) because it might be unstable...
@@ -31,4 +51,29 @@ void retractClaw() {
     motorSet(clawExtendMotor, -110);
     delay(fullRetractionTime);
     motorStop(clawExtendMotor);
+}
+
+// Lift by defined levels, need to be calibrated
+void liftOneLevelUp() {
+    motorSet(clawLiftBottomLeft, 120);
+    motorSet(clawLiftTopLeft, 120);
+    motorSet(clawLiftTopRight, 120);
+    motorSet(clawLiftBottomRight, 120);
+    delay(levelUpTime);
+    motorStop(clawLiftTopLeft);
+    motorStop(clawLiftTopRight);
+    motorStop(clawLiftBottomLeft);
+    motorStop(clawLiftBottomRight);
+}
+
+void liftOneLevelDown() {
+    motorSet(clawLiftBottomLeft, -127);
+    motorSet(clawLiftTopLeft, -127);
+    motorSet(clawLiftTopRight, -127);
+    motorSet(clawLiftBottomRight, -127);
+    delay(levelUpTime);
+    motorStop(clawLiftTopLeft);
+    motorStop(clawLiftTopRight);
+    motorStop(clawLiftBottomLeft);
+    motorStop(clawLiftBottomRight);
 }

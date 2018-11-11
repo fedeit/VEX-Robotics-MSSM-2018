@@ -3,7 +3,7 @@
 
 #include "main.h"
 
-void drive_control();
+void driveControl();
 
 void tankMoveLeftMotors();
 

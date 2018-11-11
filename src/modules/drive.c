@@ -10,20 +10,17 @@
 #include "drive.h"
 
 // Main drive control function
-void drive_control(){
-    int power = joystickGetAnalog(2, ACCEL_Y); // vertical axis right joystick (just 2?)
-    int turn = joystickGetAnalog(2, ACCEL_X); // horizonta; axis right joystick (just 1?)
-
-    motorSet(leftDrivingWheel, power + turn);
-    motorSet(rightDrivingWheel, power - turn);
+void driveControl() {
+    tankMoveLeftMotors();
+    tankMoveRightMotors();
 }
 
 void tankMoveLeftMotors() {
-    int speed = joystickGetAnalog(joystickId, 3);
+    int speed = joystickGetAnalog(joystickId, leftAnalogCtrl);
     motorSet(leftDrivingWheel, speed);
 }
 
 void tankMoveRightMotors() {
-    int speed = joystickGetAnalog(joystickId, 2);
+    int speed = joystickGetAnalog(joystickId, rightAnalogCtrl);
     motorSet(rightDrivingWheel, speed);
 }

@@ -32,9 +32,14 @@
  */
 
 void operatorControl() {
+    if isJoystickConnected(1) {
+        joystickId = 1;
+    } else if isJoystickConnected(2) {
+        joystickId = 2;
+    }
 	while (1) {
-		drive_control(); // Init drive functions
-		claw_control(); // Init claw functions
-		shooter_control(); // Init shooter functions
+        driveControl(); // Init drive functions
+        clawControl(); // Init claw functions
+        shooterControl(); // Init shooter functions
 	}
 }

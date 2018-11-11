@@ -3,14 +3,11 @@
 
 #include "main.h"
 
-void claw_control();
-
+void clawControl();
 void flipRight();
-
 void flipLeft();
-
 void extendClaw();
-
 void retractClaw();
-
+void liftOneLevelUp();
+void liftOneLevelDown();
 #endif //CLAW_H_

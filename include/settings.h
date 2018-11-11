@@ -26,7 +26,9 @@ const short leftDrivingWheel = 4;
 const int joystickId = 1;
 const int liftGroup = 5;
 const int clawGroup = 7;
-const int slingGroup = 6;
+const int slingGroup = 8;
+const int leftAnalogCtrl = 3;
+const int rightAnalogCtrl = 2;
 
 //+++++++++++++ MECHANICAL/TIME CONSTANTS +++++++++++++ //
 // Time consts, TO BE CALIBRATED, unit of measure is ms
@@ -34,5 +36,7 @@ const int flipRotationTime = 1000;
 const int liftSmallStepTime = 1000;
 const int fullExtensionTime = 500;
 const int fullRetractionTime = 500;
+const int levelUpTime = 1500;
+
 
 #endif // SETTINGS_H_

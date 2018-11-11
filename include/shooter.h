@@ -3,6 +3,7 @@
 
 #include "main.h"
 
-void shooter_control();
-
+void shooterControl();
+void loadBall();
+void shootBall();
 #endif //SHOOTER_H_
