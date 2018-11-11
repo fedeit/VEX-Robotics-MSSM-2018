@@ -1,5 +1,5 @@
 //
-//  consts.c
+//  settings.c
 //
 //  This file contains all the settings for the vehicle
 //  Created by Federico Galbiati and Alex Nikanov on 10/11/2018.
@@ -18,5 +18,11 @@ const int clawFlipMotor = 10;
 // Base movement wheel motors
 const short rightDrivingWheel = 3;
 const short leftDrivingWheel = 4;
+// joystick identifiers
+const int joystickId = 1;
+const int liftGroup = 5;
+const int clawGroup = 7;
+const int slingGroup = 6;
 
-// joystick identifier
+// Move to header file?
+// Move to C++??

@@ -11,6 +11,7 @@
 #include "modules/drive.c"
 #include "modules/claw.c"
 #include "modules/shooter.c"
+#include "modules/settings.c"
 
 /*
  * Runs the user operator control code. This function will be started in its own task with the

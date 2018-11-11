@@ -1,13 +1,13 @@
 //
 //  claw.c
 //
-//  This file contains the claw lifting, extending and flipping functions
+//  This file contains claw's funtionality
 //  Created by Federico Galbiati and Alex Nikanov on 10/11/2018.
 //
 
 #include "main.h"
 #include "claw.h"
-#include "consts.c"
+#include "settings.c"
 
 void claw_control(){
   int lifter = joystickGetAnalog(1, ACCEL_Y); // Vertical axis left joystick (just 2?)
@@ -22,4 +22,15 @@ void claw_control(){
   motorSet(clawExtendMotor, extender);
 
   motorSet(clawFlipMotor, flipper);
+}
+
+
+void tankMoveLeftMotors() {
+    int speed = joystickGetAnalog(joystickId, 3);
+    motorSet(leftDrivingWheel, speed);
+}
+
+void tankMoveRightMotors() {
+    int speed = joystickGetAnalog(joystickId, 2);
+    motorSet(rightDrivingWheel, speed);
 }
