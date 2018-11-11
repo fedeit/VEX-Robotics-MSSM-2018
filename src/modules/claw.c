@@ -48,6 +48,7 @@ void retractClaw() {
     motorStop(clawExtendMotor);
 }
 
+// Lift by levels
 void liftOneLevelUp() {
     motorSet(clawLiftBottomLeft, 120);
     motorSet(clawLiftTopLeft, 120);
