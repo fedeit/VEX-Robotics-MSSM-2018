@@ -9,7 +9,7 @@
 //  Created by Federico Galbiati and Alex Nikanov on 10/11/2018.
 //
 
-// Motors ports assignments
+//+++++++++++++ MOTOR PORTS +++++++++++++
 // Ball shooter system
 const int shooterMotor = 2;
 // Claw lift system
@@ -29,6 +29,7 @@ const int liftGroup = 5;
 const int clawGroup = 7;
 const int slingGroup = 6;
 
+//+++++++++++++ MECHANICAL/TIME CONSTANTS +++++++++++++
 // Time consts, TO BE CALIBRATED, unit of measure is ms
 const int flipRotationTime = 1000;
 const int liftSmallStepTime = 1000;
