@@ -37,4 +37,4 @@ int fullExtensionTime = 1000;
 int fullRetractionTime = 1000;
 int levelUpTime = 1500;
 int levelDownTime = 700;
-int shootingTime = 800;
+int shootTime = 800;
