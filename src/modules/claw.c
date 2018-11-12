@@ -31,7 +31,7 @@ void clawControl() {
 }
 
 void flipRight() {
-    motorSet(clawFlipMotor, 110); // Set motor to speed 100 (right), not max speed (127) because it might be unstable...
+    motorSet(clawFlipMotor, 110);
     delay(flipRotationTime);
     motorStop(clawFlipMotor);
 }
@@ -49,7 +49,7 @@ void extendClaw() {
 }
 
 void retractClaw() {
-    motorSet(clawExtendMotor, -110);
+    motorSet(clawExtendMotor, -100);
     delay(fullRetractionTime);
     motorStop(clawExtendMotor);
 }
@@ -72,7 +72,7 @@ void liftOneLevelDown() {
     motorSet(clawLiftTopLeft, 127);
     motorSet(clawLiftTopRight, -127);
     motorSet(clawLiftBottomRight, 127);
-    delay(levelUpTime);
+    delay(levelDownTime);
     motorStop(clawLiftTopLeft);
     motorStop(clawLiftTopRight);
     motorStop(clawLiftBottomLeft);

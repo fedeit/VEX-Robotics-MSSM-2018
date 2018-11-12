@@ -9,7 +9,7 @@
 #include "settings.h"
 #include "drive.h"
 
-// Main drive control function
+
 void driveControl() {
     tankMoveLeftMotors();
     tankMoveRightMotors();

@@ -32,10 +32,11 @@ extern int rightAnalogCtrl;
 
 //+++++++++++++ MECHANICAL/TIME  ANTS +++++++++++++ //
 // Time  s, TO BE CALIBRATED, unit of measure is ms
-extern int flipRotationTime ;
-extern int liftSmallStepTime;
+extern int flipRotationTime;
 extern int fullExtensionTime;
 extern int fullRetractionTime;
 extern int levelUpTime;
+extern int levelDownTime;
+extern int shootingTime;
 
 #endif // SETTINGS_H_
