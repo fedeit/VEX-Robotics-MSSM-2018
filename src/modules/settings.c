@@ -11,17 +11,18 @@
 int shooterMotor = 10;
 // Claw lift system
 int clawLiftBottomLeft = 6;
-int clawLiftBottomRight = 5;
 int clawLiftTopLeft = 7;
 int clawLiftTopRight = 8;
+int clawLiftBottomRight = 7;
 // Claw control motors: extension and flipping
-int clawExtendMotor = 9;
-int clawFlipMotor = 2;
+int clawMotor = 9;
 // Base movement wheel motors
-int rightDrivingWheel1 = 4;
-int leftDrivingWheel1 = 3;
-int rightDrivingWheel2 = 4;
-int leftDrivingWheel2 = 3;
+int rightDrivingMotor1 = 1;
+int leftDrivingMotor1 = 2;
+int rightDrivingMotor2 = 3;
+int leftDrivingMotor2 = 4;
+// Flipper
+int flipperMotor = 5;
 
 //+++++++++++++ CONTROLLER ASSIGNMENTS ++++++++++++++++ //
 int joystickId = 1;
@@ -33,10 +34,10 @@ int rightAnalogCtrl = 2;
 
 //+++++++++++++ MECHANICAL/TIME  ANTS +++++++++++++ //
 // Unit: ms
-int flipRotationTime = 253; // Calibrated
-int liftSmallSTtepTime = 1000;
-int fullExtensionTime = 1000;
-int fullRetractionTime = 1000;
+int flipUpTime = 253;
+int flipDownTime = 150;
+int liftSmallStepTime = 1000;
 int levelUpTime = 1500;
 int levelDownTime = 700;
 int shootTime = 800;
+// Ball loader

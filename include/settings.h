@@ -12,17 +12,20 @@
 extern int shooterMotor;
 // Claw lift system
 extern int clawLiftBottomLeft;
-extern int clawLiftBottomRight;
 extern int clawLiftTopLeft;
 extern int clawLiftTopRight;
+extern int clawLiftBottomRight;
 // Claw control motors: extension and flipping
-extern int clawExtendMotor;
-extern int clawFlipMotor;
+extern int clawMotor;
 // Base movement wheel motors
-extern int rightDrivingWheel1;
-extern int leftDrivingWheel1;
-extern int rightDrivingWheel2;
-extern int leftDrivingWheel2;
+extern int rightDrivingMotor1;
+extern int leftDrivingMotor1;
+extern int rightDrivingMotor2;
+extern int leftDrivingMotor2;
+// Flipper
+extern int flipperMotor;
+// Ball loader
+extern int ballLoaderMotor;
 
 //+++++++++++++ CONTROLLER ASSIGNMENTS ++++++++++++++++ //
 extern int joystickId;
@@ -34,11 +37,11 @@ extern int rightAnalogCtrl;
 
 //+++++++++++++ MECHANICAL/TIME  ANTS +++++++++++++ //
 // Times, TO BE CALIBRATED, unit of measure is ms
-extern int flipRotationTime ;
+extern int flipUpTime;
+extern int flipDownTime;
 extern int liftSmallStepTime;
-extern int fullExtensionTime;
-extern int fullRetractionTime;
 extern int levelUpTime;
 extern int levelDownTime;
 extern int shootTime;
+// BollLoader
 #endif // SETTINGS_H_
