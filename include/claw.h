@@ -5,13 +5,9 @@
 
 void clawControl();
 
-void flipRight();
+void clawUp();
 
-void flipLeft();
-
-void extendClaw();
-
-void retractClaw();
+void clawDown();
 
 void liftOneLevelUp();
 

@@ -11,16 +11,10 @@
 
 void clawControl() {
     if (joystickGetDigital(joystickId, clawGroup, JOY_UP)) {
-        extendClaw();
+        clawUp();
     }
     if (joystickGetDigital(joystickId, clawGroup, JOY_DOWN)) {
-        retractClaw();
-    }
-
-    if (joystickGetDigital(joystickId, clawGroup, JOY_RIGHT)) {
-        flipRight();
-    } else if (joystickGetDigital(joystickId, clawGroup, JOY_LEFT)) {
-        flipLeft();
+        clawDown();
     }
 
     if (joystickGetDigital(joystickId, liftGroup, JOY_UP)) {
@@ -30,28 +24,16 @@ void clawControl() {
     }
 }
 
-void flipRight() {
-    motorSet(clawFlipMotor, 110);
-    delay(flipRotationTime);
-    motorStop(clawFlipMotor);
+void clawUp() {
+    motorSet(clawMotor, 127);
+    delay(flipUpTime);
+    motorStop(clawMotor);
 }
 
-void flipLeft() {
-    motorSet(clawFlipMotor, -110);
-    delay(flipRotationTime);
-    motorStop(clawFlipMotor);
-}
-
-void extendClaw() {
-    motorSet(clawExtendMotor, 127);
-    delay(fullExtensionTime);
-    motorStop(clawExtendMotor);
-}
-
-void retractClaw() {
-    motorSet(clawExtendMotor, -100);
-    delay(fullRetractionTime);
-    motorStop(clawExtendMotor);
+void clawDown() {
+    motorSet(clawMotor, -100);
+    delay(flipDownTime);
+    motorStop(clawMotor);
 }
 
 // Lift by defined levels, need to be calibrated
@@ -62,9 +44,9 @@ void liftOneLevelUp() {
     motorSet(clawLiftBottomRight, -127);
     delay(levelUpTime);
     motorStop(clawLiftTopRight);
-    motorStop(clawLiftBottomRight);
     motorStop(clawLiftBottomLeft);
     motorStop(clawLiftTopLeft);
+    motorStop(clawLiftBottomRight);
 }
 
 void liftOneLevelDown() {
