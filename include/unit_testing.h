@@ -1,6 +1,6 @@
 //
 //  unit_testing.h
-//  
+//
 //
 //  Created by Federico Galbiati on 13/11/2018.
 //
@@ -15,5 +15,7 @@ void clawTesting();
 void liftTesting();
 void driveTesting();
 void shooterTesting();
+void flipperTesting();
+void loaderTesting();
 
 #endif /* unit_testing_h */
