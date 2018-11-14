@@ -26,3 +26,7 @@ void tankMoveRightMotors() {
     motorSet(rightDrivingWheel1, -speed);
     motorSet(rightDrivingWheel2, -speed);
 }
+
+void rotateBaseBy(int deg) {
+    
+}
