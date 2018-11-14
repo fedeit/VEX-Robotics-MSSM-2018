@@ -3,6 +3,6 @@
 
 #include "main.h"
 
-void flipperControl();
+void flipperControl(int speed);
 
 #endif // FLIPPER_H_

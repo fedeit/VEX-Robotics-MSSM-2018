@@ -5,9 +5,10 @@
 
 void driveControl();
 
-void tankMoveLeftMotors();
+void tankMoveLeftMotors(int speed);
 
-void tankMoveRightMotors();
+void tankMoveRightMotors(int speed);
 
 void rotateBaseBy(int deg);
+
 #endif // DRIVE_H_

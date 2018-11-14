@@ -15,18 +15,20 @@ void driveControl() {
     tankMoveRightMotors();
 }
 
-void tankMoveLeftMotors() {
-    int speed = joystickGetAnalog(joystickId, leftAnalogCtrl);
+void tankMoveLeftMotors(int speed) {
+    if (!speed)
+      speed = joystickGetAnalog(joystickId, leftAnalogCtrl);
     motorSet(leftDrivingMotor1, speed);
     motorSet(leftDrivingMotor2, speed);
 }
 
-void tankMoveRightMotors() {
-    int speed = joystickGetAnalog(joystickId, rightAnalogCtrl);
+void tankMoveRightMotors(int speed) {
+    if (!speed)
+      speed = joystickGetAnalog(joystickId, rightAnalogCtrl);
     motorSet(rightDrivingMotor1, -speed);
     motorSet(rightDrivingMotor2, -speed);
 }
 
 void rotateBaseBy(int deg) {
-  
+
 }

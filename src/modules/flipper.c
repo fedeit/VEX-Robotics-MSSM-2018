@@ -10,6 +10,8 @@
 #include "flipper.h"
 
 
-void flipperControl(){
-  motorSet(flipperMotor, 127); // Works constantly?
+void flipperControl(int speed){
+  if (!speed)
+    speed = 127;
+  motorSet(flipperMotor, speed); // Works constantly?
 }
