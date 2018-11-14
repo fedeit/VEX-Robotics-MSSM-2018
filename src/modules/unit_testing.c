@@ -7,6 +7,9 @@
 
 #include "unit_testing.h"
 #include "main.h"
+#include "claw.h"
+#include "drive.h"
+#include "shooter.h"
 
 void beginUnitTesting() {
     // Begin with lift testing
