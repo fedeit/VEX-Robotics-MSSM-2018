@@ -18,8 +18,10 @@ int clawLiftTopRight = 8;
 int clawExtendMotor = 9;
 int clawFlipMotor = 2;
 // Base movement wheel motors
-int rightDrivingWheel = 4;
-int leftDrivingWheel = 3;
+int rightDrivingWheel1 = 4;
+int leftDrivingWheel1 = 3;
+int rightDrivingWheel2 = 4;
+int leftDrivingWheel2 = 3;
 
 //+++++++++++++ CONTROLLER ASSIGNMENTS ++++++++++++++++ //
 int joystickId = 1;

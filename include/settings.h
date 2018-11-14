@@ -19,8 +19,10 @@ extern int clawLiftTopRight;
 extern int clawExtendMotor;
 extern int clawFlipMotor;
 // Base movement wheel motors
-extern int rightDrivingWheel;
-extern int leftDrivingWheel;
+extern int rightDrivingWheel1;
+extern int leftDrivingWheel1;
+extern int rightDrivingWheel2;
+extern int leftDrivingWheel2;
 
 //+++++++++++++ CONTROLLER ASSIGNMENTS ++++++++++++++++ //
 extern int joystickId;
