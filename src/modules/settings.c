@@ -11,15 +11,15 @@
 int shooterMotor = 10;
 // Claw lift system
 int clawLiftBottomLeft = 6;
+int clawLiftBottomRight = 7;
 int clawLiftTopLeft = 7;
 int clawLiftTopRight = 8;
-int clawLiftBottomRight = 7;
 // Claw control motors: extension and flipping
 int clawMotor = 9;
 // Base movement wheel motors
 int rightDrivingMotor1 = 1;
-int leftDrivingMotor1 = 2;
 int rightDrivingMotor2 = 3;
+int leftDrivingMotor1 = 2;
 int leftDrivingMotor2 = 4;
 // Flipper
 int flipperMotor = 5;
