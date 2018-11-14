@@ -12,15 +12,15 @@
 extern int shooterMotor;
 // Claw lift system
 extern int clawLiftBottomLeft;
+extern int clawLiftBottomRight;
 extern int clawLiftTopLeft;
 extern int clawLiftTopRight;
-extern int clawLiftBottomRight;
 // Claw control motors: extension and flipping
 extern int clawMotor;
 // Base movement wheel motors
 extern int rightDrivingMotor1;
-extern int leftDrivingMotor1;
 extern int rightDrivingMotor2;
+extern int leftDrivingMotor1;
 extern int leftDrivingMotor2;
 // Flipper
 extern int flipperMotor;
