@@ -43,5 +43,5 @@ extern int liftSmallStepTime;
 extern int levelUpTime;
 extern int levelDownTime;
 extern int shootTime;
-// BollLoader
+// Ball Loader
 #endif // SETTINGS_H_
