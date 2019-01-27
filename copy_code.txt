@@ -1,0 +1,222 @@
+#include "robot-config.h"
+using namespace vex;
+
+//Creates a competition object that allows access to Competition methods.
+vex::competition    Competition;
+
+// Function declarations
+void clawUp();
+void clawDown();
+void liftOneLevelUp();
+void liftOneLevelDown();
+void setClawControls();
+void tankMoveRightMotors();
+void tankMoveLeftMotors();
+void driveControl();
+void stopLift();
+void ballControl();
+void loadBall();
+void unloadBall();
+void ballShooterStop();
+void shootBall();
+void ballLoaderStop();
+void clawStop();
+void debug();
+
+float initialClawAngle = 0.0;
+
+// Motors object declaration
+controller firstController = controller(controllerType::primary);
+motor clawMotor = motor(7, gearSetting::ratio18_1, false);
+motor baseMotorLeftFront = motor(8, gearSetting::ratio18_1, false);
+motor baseMotorRightFront = motor(9, gearSetting::ratio18_1, false);
+motor torqueLiftLeft = motor(3, gearSetting::ratio36_1, false);
+motor torqueLiftRight = motor(1, gearSetting::ratio36_1, false);
+motor ballLoader = motor(4, gearSetting::ratio18_1, false);
+motor ballShooter = motor(2, gearSetting::ratio18_1, false);
+
+
+/*---------------------------------------------------------------------------*/
+/*                          Pre-Autonomous Functions                         */
+/*                                                                           */
+/*  You may want to perform some actions before the competition starts.      */
+/*  Do them in the following function.  You must return from this function   */
+/*  or the autonomous and usercontrol tasks will not be started.  This       */
+/*  function is only called once after the cortex has been powered on and    */ 
+/*  not every time that the robot is disabled.                               */
+/*---------------------------------------------------------------------------*/
+
+void pre_auton( void ) {
+    //---------------------------------------------------------------------------
+    //                                 SET STOPPINGS                                
+    //  Set claw and lift motors to Hold stopping                                
+    //---------------------------------------------------------------------------
+
+    torqueLiftLeft.setStopping(brakeType::hold);
+    torqueLiftRight.setStopping(brakeType::hold);
+    clawMotor.setStopping(brakeType::hold);
+    ballShooter.setStopping(brakeType::coast);
+    //---------------------------------------------------------------------------
+    //                          CALIBRATE LIFT AND CLAW                               
+    //  Bring motors lift to lowest possible pos, check for v=0,                 
+    //  and then set absolute value of rotation to 0                                 
+    //---------------------------------------------------------------------------
+    //torqueLiftLeft.spin(directionType::rev);
+    //torqueLiftRight.spin(directionType::rev);
+    //while (torqueLiftLeft.velocity(velocityUnits::pct) > 0 || torqueLiftRight.velocity(velocityUnits::pct) > 0) {}
+    //torqueLiftLeft.setRotation(0.0, rotationUnits::rev);
+    //torqueLiftRight.setRotation(0.0, rotationUnits::rev);
+    initialClawAngle = clawMotor.rotation(rotationUnits::rev);
+}
+
+void autonomous( void ) {
+    ballShooter.spin(directionType::rev, 100, velocityUnits::pct);
+    vex::task::sleep(5500);
+    ballLoader.spin(directionType::rev, 100, velocityUnits::pct);
+    vex::task::sleep(2000);
+    ballShooter.spin(directionType::rev, 0, velocityUnits::pct);
+    ballLoader.spin(directionType::rev, 0, velocityUnits::pct);
+    vex::task::sleep(300);
+    baseMotorLeftFront.spin(directionType::rev, 100, velocityUnits::pct);
+    baseMotorRightFront.spin(directionType::fwd, 95, velocityUnits::pct);
+    vex::task::sleep(2000);
+    baseMotorLeftFront.spin(directionType::rev, 0, velocityUnits::pct);
+    baseMotorRightFront.spin(directionType::fwd, 0, velocityUnits::pct);
+    vex::task::sleep(300);
+    baseMotorLeftFront.spin(directionType::fwd, 100, velocityUnits::pct);
+    baseMotorRightFront.spin(directionType::rev, 95, velocityUnits::pct);
+    vex::task::sleep(2000);
+    baseMotorLeftFront.spin(directionType::fwd, 0, velocityUnits::pct);
+    baseMotorRightFront.spin(directionType::rev, 0, velocityUnits::pct);
+}
+
+void usercontrol( void ) {
+    setClawControls();
+    driveControl();
+    ballControl();
+}
+
+int main() {
+    //Run the pre-autonomous function. 
+    pre_auton();
+
+    //Set up callbacks for autonomous and driver control periods.
+    Competition.autonomous( autonomous );
+    Competition.drivercontrol( usercontrol );
+
+    //Prevent main from exiting with an infinite loop.                        
+    while(1) {
+      vex::task::sleep(100);//Sleep the task for a short amount of time to prevent wasted resources.
+    }    
+}
+
+// Claw functions
+void setClawControls() {
+   void (*clawUpPtr)() = &clawUp; 
+   void (*clawDownPtr)() = &clawDown; 
+   void (*clawUpReleasedPtr)() = &clawStop; 
+   void (*clawDownReleasedPtr)() = &clawStop; 
+   void (*liftOneLevelUpPtr)() = &liftOneLevelUp; 
+   void (*liftOneLevelDownPtr)() = &liftOneLevelDown; 
+   void (*stopLiftPtr)() = &stopLift; 
+   firstController.ButtonUp.pressed(clawUpPtr);
+   firstController.ButtonDown.pressed(clawDownPtr);
+   firstController.ButtonUp.released(clawUpReleasedPtr);
+   firstController.ButtonDown.released(clawDownReleasedPtr);
+   firstController.ButtonL1.pressed(liftOneLevelUpPtr);
+   firstController.ButtonL2.pressed(liftOneLevelDownPtr);
+   firstController.ButtonL1.released(stopLiftPtr);
+   firstController.ButtonL2.released(stopLiftPtr);
+}
+
+void clawStop() {
+    clawMotor.stop(brakeType::hold);
+}
+
+void clawUp() {
+   clawMotor.spin(directionType::fwd, 50, velocityUnits::pct);
+}
+
+void clawDown() {
+   clawMotor.spin(directionType::rev, 50, velocityUnits::pct);
+}
+
+void stopLift() {
+    torqueLiftRight.spin(directionType::fwd, 0, velocityUnits::pct);
+    torqueLiftLeft.spin(directionType::rev, 0, velocityUnits::pct);
+}
+
+// Lift functions
+void liftOneLevelUp() {
+    while (firstController.ButtonL1.pressing()){
+        torqueLiftRight.spin(directionType::rev, 100, velocityUnits::pct);
+        torqueLiftLeft.spin(directionType::fwd, 100, velocityUnits::pct);
+        if (torqueLiftLeft.velocity(velocityUnits::pct) == 0) {
+            return;
+        }
+    }
+        stopLift();
+}
+
+void liftOneLevelDown() {
+    while (firstController.ButtonL2.pressing()){
+        torqueLiftRight.spin(directionType::fwd, 75, velocityUnits::pct);
+        torqueLiftLeft.spin(directionType::rev, 75, velocityUnits::pct);
+        if (torqueLiftLeft.velocity(velocityUnits::pct) == 0) {
+            return;
+        }
+    }
+}
+
+// Drive functions
+void driveControl() {
+   void (*tankMoveLeftMotorsPtr)() = &tankMoveLeftMotors; 
+   void (*tankMoveRightMotorsPtr)() = &tankMoveRightMotors; 
+   firstController.Axis3.changed(tankMoveLeftMotorsPtr);
+   firstController.Axis2.changed(tankMoveRightMotorsPtr);
+}
+
+void tankMoveLeftMotors() {
+   double speed = -firstController.Axis3.position(percentUnits::pct);
+   baseMotorLeftFront.spin(directionType::rev, speed, velocityUnits::pct);
+}
+
+void tankMoveRightMotors() {
+   double speed = -firstController.Axis2.position(percentUnits::pct);
+   baseMotorRightFront.spin(directionType::fwd, speed, velocityUnits::pct);
+}
+
+// Ball loading and shooting functions
+void ballControl() {
+   void (*loadBallPtr)() = &loadBall; 
+   void (*unloadBallPtr)() = &unloadBall; 
+   void (*ballLoaderStopPtr)() = &ballLoaderStop; 
+   void (*shootBallStopPtr)() = &ballShooterStop; 
+   void (*shootBallPtr)() = &shootBall; 
+   firstController.ButtonX.pressed(shootBallPtr);
+   firstController.ButtonX.released(shootBallStopPtr);
+   firstController.ButtonR1.pressed(loadBallPtr);
+   firstController.ButtonR2.pressed(unloadBallPtr);
+   firstController.ButtonR1.released(ballLoaderStopPtr);
+   firstController.ButtonR2.released(ballLoaderStopPtr);
+}
+
+void loadBall() {
+        ballLoader.spin(directionType::rev, 100, velocityUnits::pct);
+}
+
+void unloadBall() {
+        ballLoader.spin(directionType::fwd, 100, velocityUnits::pct);
+}
+
+void shootBall() {
+        ballShooter.spin(directionType::rev, 100, velocityUnits::pct);
+}
+
+void ballShooterStop() {
+        ballShooter.spin(directionType::rev, 0, velocityUnits::pct);
+}
+
+void ballLoaderStop() {
+        ballLoader.spin(directionType::rev, 0, velocityUnits::pct);
+}                            
