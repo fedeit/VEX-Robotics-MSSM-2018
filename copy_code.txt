@@ -4,9 +4,13 @@ using namespace vex;
 //Creates a competition object that allows access to Competition methods.
 vex::competition    Competition;
 
+// Constants
+const char COLOR = "R"; // R for red, B for blue
+
 // Function declarations
-void clawUp();
-void clawDown();
+void clawFull();
+void clawFolded();
+void clawFlip();
 void liftOneLevelUp();
 void liftOneLevelDown();
 void setClawControls();
@@ -21,9 +25,11 @@ void ballShooterStop();
 void shootBall();
 void ballLoaderStop();
 void clawStop();
-void debug();
+void debug(); // Debug function?
 
+// Global vars
 float initialClawAngle = 0.0;
+char clawCondition = 'd'; // 'd' for 'down', 'u' for 'up'
 
 // Motors object declaration
 controller firstController = controller(controllerType::primary);
@@ -70,6 +76,7 @@ void pre_auton( void ) {
 }
 
 void autonomous( void ) {
+    // Fix + calibrate the shooter. The second flag?
     ballShooter.spin(directionType::rev, 100, velocityUnits::pct);
     vex::task::sleep(5500);
     ballLoader.spin(directionType::rev, 100, velocityUnits::pct);
@@ -77,6 +84,7 @@ void autonomous( void ) {
     ballShooter.spin(directionType::rev, 0, velocityUnits::pct);
     ballLoader.spin(directionType::rev, 0, velocityUnits::pct);
     vex::task::sleep(300);
+    // Calibrate the movement according to battery
     baseMotorLeftFront.spin(directionType::rev, 100, velocityUnits::pct);
     baseMotorRightFront.spin(directionType::fwd, 95, velocityUnits::pct);
     vex::task::sleep(2000);
@@ -88,16 +96,31 @@ void autonomous( void ) {
     vex::task::sleep(2000);
     baseMotorLeftFront.spin(directionType::fwd, 0, velocityUnits::pct);
     baseMotorRightFront.spin(directionType::rev, 0, velocityUnits::pct);
+    
+    if (COLOR == 'R')
+    {
+        // Get on the platform
+    }
+    else if (COLOR == 'B')
+    {
+        // Get on the platform
+    }
+    
 }
 
 void usercontrol( void ) {
-    setClawControls();
-    driveControl();
-    ballControl();
+    void (*setClawControlsPtr)() = &setClawControls;
+    void (*driveControlPtr)() = &driveControl;
+    void (*ballControlPtr)() = &ballControl;
+    void (*debugPtr)() = &debug;
+    
+    setClawControlsPtr;
+    driveControlPtr;
+    ballControlPtr;
+    debugPtr;
 }
 
 int main() {
-    //Run the pre-autonomous function. 
     pre_auton();
 
     //Set up callbacks for autonomous and driver control periods.
@@ -107,10 +130,22 @@ int main() {
     //Prevent main from exiting with an infinite loop.                        
     while(1) {
       vex::task::sleep(100);//Sleep the task for a short amount of time to prevent wasted resources.
-    }    
+    }   
+    
+    return 0;
 }
 
-// Claw functions
+void debug(){
+    firstController.ButtonLeft.pressed([]{
+        // Various debugging functions, loaded by left + smth
+        firstController.ButtonRight.pressed([]{
+            void(*autonomousPtr)() = &autonomous;
+            autonomousPtr; // This interrupts something?
+        });
+    });
+}
+
+// -------------------------- Claw functions ------------------------ //
 void setClawControls() {
    void (*clawUpPtr)() = &clawUp; 
    void (*clawDownPtr)() = &clawDown; 
@@ -133,21 +168,29 @@ void clawStop() {
     clawMotor.stop(brakeType::hold);
 }
 
-void clawUp() {
-   clawMotor.spin(directionType::fwd, 50, velocityUnits::pct);
+void clawFlip() {
+    void (*clawFullPtr)() = &clawFull;
+    void (*clawFoldedPtr)() = &clawFolded;
+    
+    if (clawCondition == 'd')
+        clawFullPtr;
+    else if (clawCondition == 'u')
+        clawFoldedPtr;
+    
+    clawCondition = clawCondition == 'd' ? 'u' : 'd';
 }
 
-void clawDown() {
-   clawMotor.spin(directionType::rev, 50, velocityUnits::pct);
+void clawFolded(){
+    clawMotor.rotateFor(90, rotationUnits::deg, 100, velocityUnits::pct); // Constants are to be modified
 }
 
-void stopLift() {
-    torqueLiftRight.spin(directionType::fwd, 0, velocityUnits::pct);
-    torqueLiftLeft.spin(directionType::rev, 0, velocityUnits::pct);
+void clawFull(){
+    clawMotor.rotateFor(-90, rotationUnits::deg, 100, velocityUnits::pct); // Constants are to be modified
 }
 
-// Lift functions
+// ------------------------ Lift functions ------------------------ //
 void liftOneLevelUp() {
+    void(*stopLiftPtr)() = &stopLift;
     while (firstController.ButtonL1.pressing()){
         torqueLiftRight.spin(directionType::rev, 100, velocityUnits::pct);
         torqueLiftLeft.spin(directionType::fwd, 100, velocityUnits::pct);
@@ -155,10 +198,12 @@ void liftOneLevelUp() {
             return;
         }
     }
-        stopLift();
+    
+    stopLiftPtr;
 }
 
 void liftOneLevelDown() {
+    void(*stopLiftPtr)() = &stopLift;
     while (firstController.ButtonL2.pressing()){
         torqueLiftRight.spin(directionType::fwd, 75, velocityUnits::pct);
         torqueLiftLeft.spin(directionType::rev, 75, velocityUnits::pct);
@@ -166,9 +211,16 @@ void liftOneLevelDown() {
             return;
         }
     }
+    
+    stopLiftPtr;
 }
 
-// Drive functions
+void stopLift() {
+    torqueLiftRight.spin(directionType::fwd, 0, velocityUnits::pct);
+    torqueLiftLeft.spin(directionType::rev, 0, velocityUnits::pct);
+}
+
+// ------------------ Drive functions --------------------- //
 void driveControl() {
    void (*tankMoveLeftMotorsPtr)() = &tankMoveLeftMotors; 
    void (*tankMoveRightMotorsPtr)() = &tankMoveRightMotors; 
@@ -186,7 +238,7 @@ void tankMoveRightMotors() {
    baseMotorRightFront.spin(directionType::fwd, speed, velocityUnits::pct);
 }
 
-// Ball loading and shooting functions
+// ------ Ball loading and shooting functions -------- //
 void ballControl() {
    void (*loadBallPtr)() = &loadBall; 
    void (*unloadBallPtr)() = &unloadBall; 
