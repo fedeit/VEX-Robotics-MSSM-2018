@@ -4,8 +4,8 @@ using namespace vex;
 vex::competition    Competition;
 
 // Constants
-const short COLOR = 1; // -1 for red, 1 for blue
-const short START_POS = 0; // 0 for closer one, 1 for the farther one
+const int COLOR = -1; // -1 for red, 1 for blue
+const int START_POS = 0; //0 for the closer one, 1 for the further one
 
 // Function declarations
 void liftOneLevelUp();
@@ -29,8 +29,10 @@ void moveBaseByRevs(double revs, double speed);
 void setCapFlipperControls();
 void capFlipperToggle();
 void clawDown();
+
 void clawUp();
-void setLiftControls();
+// Global vars
+char clawCondition = 'd'; // 'd' for 'down', 'u' for 'up'
 
 // Motors object declaration
 controller firstController = controller(controllerType::primary);
@@ -82,41 +84,78 @@ void autonomous( void ) {
     if (START_POS == 0) // 0 for the closer tile, 1 for the farther
     {
         // Hit flag going forward 1.3s, then stop base
-        moveBaseByRevs(4.00, 100);
+        moveBaseByRevs(4.2, 100);
         // Going back
-        moveBaseByRevs(-1.00, 100); 
-        // Turning the back so it would hit the lower flag in the middle
-        if (COLOR == -1) // Starting with red color
-            tankMoveLeftMotorsByRevs(-2.00, 100);
-        else
-            tankMoveRightMotorsByRevs(-2.00, 100);
+        
+        vex::task::sleep(2000);
+        moveBaseByRevs(-2.3, 100); 
+        
+        vex::task::sleep(2000);
+        tankMoveLeftMotorsByRevs(-COLOR*1.0, 100);
+        tankMoveRightMotorsByRevs(COLOR*1.0, 100);
+        
+        vex::task::sleep(1000);
         
         // Add the flipping part? 
+        capFlipperToggle();
         
-        // Hitting the flag in the middle
-        moveBaseByRevs(-1.5, 100);
+        vex::task::sleep(1000);
+        moveBaseByRevs(4.1, 100);
+        vex::task::sleep(3000);
         
-        if (COLOR == -1)
-            tankMoveRightMotorsByRevs(-0.5, 100);
-        else
-            tankMoveLeftMotorsByRevs(-0.5, 100);
+        capFlipperToggle();
         
-        moveBaseByRevs(-1.00, 100);
+        tankMoveLeftMotorsByRevs(-COLOR*1.0, 100);
+        tankMoveRightMotorsByRevs(COLOR*1.0, 100);
+        vex::task::sleep(2000);
+        
+        moveBaseByRevs(-2.6, 100);
+        vex::task::sleep(2000);
+        
+        moveBaseByRevs(2.6, 100);  
+        vex::task::sleep(2000);
+        
         // Align with the platform
-        moveBaseByRevs(0.5, 100);
-        tankMoveRightMotorsByRevs(-COLOR*0.5, 100);
-        tankMoveLeftMotorsByRevs(COLOR*0.5, 100);
-        moveBaseByRevs(2.5, 100); // Jumping on the platform from the front side of the robot
-        tankMoveRightMotorsByRevs(-COLOR*0.5, 100);
-        tankMoveLeftMotorsByRevs(COLOR*0.5, 100);
-        moveBaseByRevs(0.3, 100); // Jumping on the second platform
+        tankMoveRightMotorsByRevs(COLOR*1.0, 100);
+        tankMoveLeftMotorsByRevs(-COLOR*1.0, 100);
+        vex::task::sleep(2000);
+        
+        moveBaseByRevs(0.8, 100);
+        vex::task::sleep(2000);
+        
+        tankMoveRightMotorsByRevs(-COLOR*1.01, 100);
+        tankMoveLeftMotorsByRevs(COLOR*1.01, 100);
+        vex::task::sleep(1000);
+        capFlipper.spin(directionType::rev, 100.0, velocityUnits::pct);
+        vex::task::sleep(1000);
+        
+        moveBaseByRevs(3.5, 100);
+        vex::task::sleep(4000);
+        capFlipper.stop();
     }
     else
     {
-        // Second autonomous for the outer starting tile
-        // Flip some stuff and get on the platform
+        moveBaseByRevs(-2.1, 100);
+        vex::task::sleep(1000);
+        
+        tankMoveRightMotorsByRevs(COLOR*1.6, 100);
+        tankMoveLeftMotorsByRevs(-COLOR*1.6, 100);
+        vex::task::sleep(1000);
+        
+        capFlipperToggle();
+        moveBaseByRevs(4.2, 100);
+        vex::task::sleep(1000);
+        
+        capFlipperToggle();
+        moveBaseByRevs(-1.0, 100);
+        vex::task::sleep(1000);
+        
+        tankMoveRightMotorsByRevs(-COLOR*1.6, 100);
+        tankMoveLeftMotorsByRevs(COLOR*1.6, 100);
+        
+        vex::task::sleep(1000);
+        moveBaseByRevs(4.5, 100);
     }
-    
 }
 
 void usercontrol( void ) {
@@ -124,7 +163,6 @@ void usercontrol( void ) {
     setClawControls();
     driveControl();
     ballControl();
-    setLiftControls();
     //debug();
 }
 
@@ -139,7 +177,7 @@ int main() {
     while(1) {
       vex::task::sleep(100);//Sleep the task for a short amount of time to prevent wasted resources.
     }   
-    
+
     return 0;
 }
 
@@ -147,8 +185,8 @@ void debug(){
     firstController.ButtonLeft.pressed([]{
         // Various debugging functions, loaded by left + smth
         firstController.ButtonRight.pressed([]{
-            void(*autonomousPtr)() = &autonomous;
-            autonomousPtr; // This interrupts something?
+            //void(*autonomousPtr)() = &autonomous;
+            //autonomousPtr; // This interrupts something?
         });
     });
 }
@@ -164,7 +202,7 @@ void capFlipperToggle() {
     if (capFlipper.velocity(velocityUnits::pct) != 0) {
         capFlipper.stop();
     } else {
-        capFlipper.spin(directionType::rev, 80.0, velocityUnits::pct);
+        capFlipper.spin(directionType::fwd, 80.0, velocityUnits::pct);
     }
 }
 
@@ -174,10 +212,17 @@ void setClawControls() {
    void (*clawDownPtr)() = &clawDown; 
    void (*clawUpReleasedPtr)() = &clawStop; 
    void (*clawDownReleasedPtr)() = &clawStop; 
+   void (*liftOneLevelUpPtr)() = &liftOneLevelUp; 
+   void (*liftOneLevelDownPtr)() = &liftOneLevelDown; 
+   void (*stopLiftPtr)() = &stopLift; 
    firstController.ButtonUp.pressed(clawUpPtr);
    firstController.ButtonDown.pressed(clawDownPtr);
    firstController.ButtonUp.released(clawUpReleasedPtr);
    firstController.ButtonDown.released(clawDownReleasedPtr);
+   firstController.ButtonL1.pressed(liftOneLevelUpPtr);
+   firstController.ButtonL2.pressed(liftOneLevelDownPtr);
+   firstController.ButtonL1.released(stopLiftPtr);
+   firstController.ButtonL2.released(stopLiftPtr);
 }
 
 void clawStop() {
@@ -198,15 +243,6 @@ void clawUp() {
 }
 
 // ------------------------ Lift functions ------------------------ //
-void setLiftControls(){
-   void (*liftOneLevelUpPtr)() = &liftOneLevelUp; 
-   void (*liftOneLevelDownPtr)() = &liftOneLevelDown; 
-   void (*stopLiftPtr)() = &stopLift; 
-   firstController.ButtonL1.pressed(liftOneLevelUpPtr);
-   firstController.ButtonL2.pressed(liftOneLevelDownPtr);
-   firstController.ButtonL1.released(stopLiftPtr);
-   firstController.ButtonL2.released(stopLiftPtr);
-}
 void liftOneLevelUp() {
     while (firstController.ButtonL1.pressing()){
         torqueLiftRight.spin(directionType::rev, 100, velocityUnits::pct);
@@ -215,7 +251,7 @@ void liftOneLevelUp() {
             return;
         }
     }
-    
+
     stopLift();
 }
 
@@ -227,7 +263,7 @@ void liftOneLevelDown() {
             return;
         }
     }
-    
+
     stopLift();
 }
 
@@ -257,18 +293,24 @@ void tankMoveRightMotors() {
 }
 
 void moveBaseByRevs(double revs, double speed){
-    tankMoveRightMotorsByRevs(revs, speed);
-    tankMoveLeftMotorsByRevs(revs, speed);
+    baseMotorLeftFront.setStopping(brakeType::coast);
+    baseMotorLeftBack.setStopping(brakeType::coast);
+    baseMotorRightFront.setStopping(brakeType::coast);
+    baseMotorRightFront.setStopping(brakeType::coast);
+   baseMotorLeftFront.rotateFor(revs, rotationUnits::rev, speed, velocityUnits::pct, false);
+   baseMotorLeftBack.rotateFor(revs, rotationUnits::rev, speed, velocityUnits::pct, false);
+   baseMotorRightFront.rotateFor(-revs, rotationUnits::rev, speed, velocityUnits::pct, false);
+   baseMotorRightBack.rotateFor(-revs, rotationUnits::rev, speed, velocityUnits::pct, false);
 }
 
 void tankMoveLeftMotorsByRevs(double revs, double speed) {
-   baseMotorLeftFront.rotateTo(revs, rotationUnits::rev, speed, velocityUnits::pct, false);
-   baseMotorLeftBack.rotateTo(revs, rotationUnits::rev, speed, velocityUnits::pct, false);
+   baseMotorLeftFront.rotateFor(revs, rotationUnits::rev, speed, velocityUnits::pct, false);
+   baseMotorLeftBack.rotateFor(revs, rotationUnits::rev, speed, velocityUnits::pct, false);
 }
 
 void tankMoveRightMotorsByRevs(double revs, double speed) {
-   baseMotorRightFront.rotateTo(-revs, rotationUnits::rev, speed, velocityUnits::pct, false);
-   baseMotorRightBack.rotateTo(-revs, rotationUnits::rev, speed, velocityUnits::pct, false);
+   baseMotorRightFront.rotateFor(-revs, rotationUnits::rev, speed, velocityUnits::pct, false);
+   baseMotorRightBack.rotateFor(-revs, rotationUnits::rev, speed, velocityUnits::pct, false);
 }
 
 // ------ Ball loading and shooting functions -------- //
@@ -294,7 +336,6 @@ void unloadBall() {
         ballLoader.spin(directionType::fwd, 100, velocityUnits::pct);
 }
 
-// Flywheel
 void shootBall() {
         ballShooter.spin(directionType::rev, 100, velocityUnits::pct);
 }
@@ -305,4 +346,4 @@ void ballShooterStop() {
 
 void ballLoaderStop() {
         ballLoader.spin(directionType::rev, 0, velocityUnits::pct);
-}
+} 
