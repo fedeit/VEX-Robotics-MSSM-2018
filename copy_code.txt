@@ -135,26 +135,35 @@ void autonomous( void ) {
     }
     else
     {
-        moveBaseByRevs(-2.1, 100);
-        vex::task::sleep(1000);
-        
-        tankMoveRightMotorsByRevs(COLOR*1.6, 100);
-        tankMoveLeftMotorsByRevs(-COLOR*1.6, 100);
-        vex::task::sleep(1000);
-        
+        // Put it facing the cap with our color
         capFlipperToggle();
         moveBaseByRevs(4.2, 100);
+        vex::task::sleep(3000);
+        
+        tankMoveRightMotorsByRevs(COLOR*1.0, 100);
+        tankMoveLeftMotorsByRevs(-COLOR*1.0, 100);
         vex::task::sleep(1000);
+        
+        moveBaseByRevs(2.1, 100);
+        vex::task::sleep(2000);
         
         capFlipperToggle();
-        moveBaseByRevs(-1.0, 100);
+        tankMoveRightMotorsByRevs(COLOR*1.0, 100);
+        tankMoveLeftMotorsByRevs(-COLOR*1.0, 100);
         vex::task::sleep(1000);
         
-        tankMoveRightMotorsByRevs(-COLOR*1.6, 100);
-        tankMoveLeftMotorsByRevs(COLOR*1.6, 100);
-        
+        moveBaseByRevs(0.8, 100);
         vex::task::sleep(1000);
-        moveBaseByRevs(4.5, 100);
+        
+        tankMoveRightMotorsByRevs(COLOR*1.0, 100);
+        tankMoveLeftMotorsByRevs(-COLOR*1.0, 100);
+        vex::task::sleep(1000);
+        
+        capFlipper.spin(directionType::rev, 100.0, velocityUnits::pct);
+        vex::task::sleep(1000);
+        moveBaseByRevs(3.5, 100);
+        vex::task::sleep(3000);
+        capFlipper.stop();
     }
 }
 
