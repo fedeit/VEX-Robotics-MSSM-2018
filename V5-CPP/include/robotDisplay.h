@@ -1,5 +1,8 @@
-#ifndef ROBOT_DISPLAY
-#define ROBOT_DISPLAY
+#ifndef ROBOT_DISPLAY_H
+#define ROBOT_DISPLAY_H
+
+#include "teamColor.h"
+#include "startingPosition.h"
 
 class RobotDisplay {
 public:
@@ -8,4 +11,3 @@ public:
 };
 
 #endif
-

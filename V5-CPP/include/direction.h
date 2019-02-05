@@ -1,8 +1,10 @@
-#ifndef ROBOT_TANK_ASSEMBLY
-#define ROBOT_TANK_ASSEMBLY
+#ifndef DIRECTION_H
+#define DIRECTION_H
 
 enum Direction {
-    forward, backward, stop
-}
+    forward,
+    backward,
+    stop
+};
 
 #endif

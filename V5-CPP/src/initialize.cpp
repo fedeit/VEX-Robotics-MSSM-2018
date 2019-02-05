@@ -1,5 +1,7 @@
 #include "main.h"
 #include "robotMotorDeclarations.h"
+#include "robot.h"
+
 void on_center_button() {
 	static bool pressed = false;
 	pressed = !pressed;

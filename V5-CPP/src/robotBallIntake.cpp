@@ -1,9 +1,9 @@
 #include "robotBallIntake.h"
 
 void RobotBallIntake::toggleIntake() {
-    
+
 }
 
-void RobotBallIntake::treverseIntake() {
-    
+void RobotBallIntake::reverseIntake() {
+
 }

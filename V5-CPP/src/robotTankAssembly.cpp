@@ -1,5 +1,8 @@
+#include "main.h"
 #include "robotTankAssembly.h"
-
+#include "robotMotorDeclarations.h"
+#include "teamColor.h"
+#include "direction.h"
 
 // Speed out of 200 (RPM). If direction == stop, stop even if speed != 0
 void RobotTankAssembly::moveBase(double speed, Direction direction) {
@@ -40,10 +43,9 @@ void RobotTankAssembly::moveRightSide(double speed) {
 
 // Used by the autonomous function
 void RobotTankAssembly::moveByTile(double speed, Direction direction) {
-    
+
 }
 
 void RobotTankAssembly::rotateBaseOfAngle(double angle) {
-    
-}
 
+}
