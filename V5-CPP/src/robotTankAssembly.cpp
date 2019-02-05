@@ -1,17 +1,17 @@
 #include "robotTankAssembly.h"
 
-void RobotTankAssembly::moveBase() {
+void RobotTankAssembly::moveBase(double speed, Direction direction) {
     
 }
 
-void RobotTankAssembly::moveLeftSide() {
+void RobotTankAssembly::moveLeftSide(double speed, Direction direction) {
     
 }
 
-void RobotTankAssembly::moveRightSide() {
+void RobotTankAssembly::moveRightSide(double speed, Direction direction) {
     
 }
 
-void RobotTankAssembly::moveByTile() {
+void RobotTankAssembly::moveByTile(double speed, Direction direction) {
     
 }
