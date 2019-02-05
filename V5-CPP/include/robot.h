@@ -11,6 +11,7 @@ class Robot {
     RobotDisplay brainDisplay;
     Controller master;
 public:
+    Robot();
     void runAutonomous();
     void runManual();
     void runDisplaySetup();
