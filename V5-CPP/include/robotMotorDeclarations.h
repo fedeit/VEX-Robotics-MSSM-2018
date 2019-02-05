@@ -1,5 +1,5 @@
-#ifndef ROBOT_H
-#define ROBOT_H
+#ifndef ROBOT_MOTOR_DECLARATIONS_H
+#define ROBOT_MOTOR_DECLARATIONS_H
 
 using namespace pros;
 

@@ -1,5 +1,5 @@
-#ifndef ROBOT_H
-#define ROBOT_H
+#ifndef ROBOT_BALL_SHOOTER_H
+#define ROBOT_BALL_SHOOTER_H
 
 class RobotBallShooter {
 public:

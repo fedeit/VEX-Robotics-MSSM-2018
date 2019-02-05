@@ -1,5 +1,5 @@
-#ifndef ROBOT_H
-#define ROBOT_H
+#ifndef ROBOT_CAP_FLIPPER_H
+#define ROBOT_CAP_FLIPPER_H
 
 class RobotCapFlipper {
 public:

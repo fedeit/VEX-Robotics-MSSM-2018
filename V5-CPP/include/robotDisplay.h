@@ -1,10 +1,10 @@
-#ifndef ROBOT_H
-#define ROBOT_H
+#ifndef ROBOT_DISPLAY
+#define ROBOT_DISPLAY
 
 class RobotDisplay {
 public:
-    TeamColor RobotDisplay::chooseTeamColor();
-    StartingPosition RobotDisplay::chooseTile();
+    TeamColor chooseTeamColor();
+    StartingPosition chooseStartingTile();
 };
 
 #endif

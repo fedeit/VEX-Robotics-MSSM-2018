@@ -12,7 +12,7 @@ TeamColor RobotDisplay::chooseTeamColor() {
     }
 }
 
-StartingPosition RobotDisplay::chooseTile() {
+StartingPosition RobotDisplay::chooseStartingTile() {
     pros::lcd::clear();
     pros::lcd::set_text(1, "Choose a Tile");
     pros::lcd::set_text(3, "Left for Front");
