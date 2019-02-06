@@ -2,7 +2,7 @@
 #include "main.h"
 
 Robot::Robot() {
-
+  
 }
 
 void Robot::runAutonomous() {
@@ -23,6 +23,9 @@ void Robot::runManual() {
         if (master.get_digital_new_press(DIGITAL_Y)) {
           capFlipper.toggleFlipper();
         }
+        if (master.get_digital_new_press(DIGITAL_A)) {
+          capFlipper.toggleReversedFlipper();
+        }
 
         if (master.get_digital(DIGITAL_X)) {
           ballShooter.spin();
@@ -33,6 +36,11 @@ void Robot::runManual() {
         if (master.get_digital_new_press(DIGITAL_R1)) {
           ballIntake.toggleIntake();
         }
+
+        if (master.get_digital_new_press(DIGITAL_Y)) {
+          descore.toggle();
+        }
+
         pros::delay(20);
     }
 }

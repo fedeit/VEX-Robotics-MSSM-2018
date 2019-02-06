@@ -21,6 +21,6 @@ extern Motor ballLoader;
 extern Motor ballShooter;
 
 extern Motor capFlipper;
-extern Motor capDebouncer;
+extern Motor capDescore;
 
 #endif
