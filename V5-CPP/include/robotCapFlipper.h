@@ -5,8 +5,6 @@ class RobotCapFlipper {
 public:
     void toggleFlipper();
     void toggleReversedFlipper();
-    void autoAim();
 };
 
 #endif
-

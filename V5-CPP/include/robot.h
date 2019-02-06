@@ -1,6 +1,7 @@
 #ifndef ROBOT_H
 #define ROBOT_H
 
+#include "main.h"
 #include "api.h"
 #include "robotDisplay.h"
 #include "robotCapFlipper.h"

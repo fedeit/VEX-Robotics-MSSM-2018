@@ -1,7 +1,8 @@
 #include "robot.h"
+#include "main.h"
 
 Robot::Robot() {
-    runDisplaySetup();
+
 }
 
 void Robot::runAutonomous() {
@@ -14,7 +15,24 @@ void Robot::runManual() {
         // read buttons pressed
         // Do we want to create a controller class that has logs buttons pressed
         // and has call back functions on the hardware instance vars of the robot?
+        int left = master.get_analog(ANALOG_LEFT_Y);
+    		int right = master.get_analog(ANALOG_RIGHT_Y);
+        tankAssembly.moveLeftSide(left);
+        tankAssembly.moveRightSide(right);
 
+        if (master.get_digital_new_press(DIGITAL_Y)) {
+          capFlipper.toggleFlipper();
+        }
+
+        if (master.get_digital(DIGITAL_X)) {
+          ballShooter.spin();
+        } else {
+          ballShooter.stop();
+        }
+
+        if (master.get_digital_new_press(DIGITAL_R1)) {
+          ballIntake.toggleIntake();
+        }
         pros::delay(20);
     }
 }

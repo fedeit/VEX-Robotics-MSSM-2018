@@ -1,6 +1,5 @@
 #include "main.h"
 #include "robotMotorDeclarations.h"
-#include "robot.h"
 
 void on_center_button() {
 	static bool pressed = false;
@@ -19,7 +18,6 @@ void on_center_button() {
  * to keep execution time for this mode under a few seconds.
  */
 void initialize() {
-    robot = Robot();
 }
 
 /**

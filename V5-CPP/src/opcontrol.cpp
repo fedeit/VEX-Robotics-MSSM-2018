@@ -1,4 +1,5 @@
 #include "main.h"
+#include "robotMotorDeclarations.h"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -14,5 +15,6 @@
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-    
+  std::cout << "Hello" << std::endl;
+  robot.runManual();
 }

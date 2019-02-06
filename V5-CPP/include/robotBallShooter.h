@@ -6,6 +6,8 @@ public:
     void load();
     void shoot();
     void loadAndShoot();
+    void spin();
+    void stop();
 };
 
 #endif
