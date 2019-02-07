@@ -15,7 +15,7 @@ public:
     void moveRightSide(double speed);
 
     // Mainly used by autonomous sequences
-    void moveByTile(double speed, Direction direction);
+    void moveByTiles(double speed, double tiles);
     void rotateBaseOfAngle(double angle);
 };
 

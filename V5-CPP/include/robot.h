@@ -9,7 +9,7 @@
 #include "robotBallShooter.h"
 #include "robotTankAssembly.h"
 #include "robotCapFlipper.h"
-#include "robotDescore.h"
+#include "robotCapDescore.h"
 #include "startingPosition.h"
 #include "autonomousSequence.h"
 
@@ -17,7 +17,7 @@ class Robot {
     RobotBallIntake ballIntake;
     RobotBallShooter ballShooter;
     RobotCapFlipper capFlipper;
-    RobotDescore descore;
+    RobotCapDescore descore;
     RobotTankAssembly tankAssembly;
     StartingPosition startPos;
     TeamColor teamColor;

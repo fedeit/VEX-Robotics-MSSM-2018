@@ -42,8 +42,26 @@ void RobotTankAssembly::moveRightSide(double speed) {
 }
 
 // Used by the autonomous function
-void RobotTankAssembly::moveByTile(double speed, Direction direction) {
+void RobotTankAssembly::moveByTiles(double speed, double tiles) {
+  float distance = tiles;
+  baseMotorLeftBack.move_absolute(distance, 100); // Moves 100 units forward
+  baseMotorLeftFront.move_absolute(distance, 100); // Moves 100 units forward
+  baseMotorRightFront.move_absolute(distance, 100); // Moves 100 units forward
+  baseMotorRightBack.move_absolute(distance, 100); // Moves 100 units forward
 
+  while (!((baseMotorRightBack.get_position() < distance + 5) && (baseMotorRightBack.get_position() > distance - 5))) {
+    pros::delay(2);
+  }
+
+  baseMotorRightBack.move(0);
+  baseMotorLeftFront.move(0);
+  baseMotorRightFront.move(0);
+  baseMotorLeftBack.move(0);
+
+  baseMotorRightBack.tare_position();
+  baseMotorLeftFront.tare_position();
+  baseMotorRightFront.tare_position();
+  baseMotorLeftBack.tare_position();
 }
 
 void RobotTankAssembly::rotateBaseOfAngle(double angle) {

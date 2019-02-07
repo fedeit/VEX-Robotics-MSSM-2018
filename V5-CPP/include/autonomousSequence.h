@@ -9,6 +9,7 @@ class AutonomousSequence {
   TeamColor teamColor;
 public:
   AutonomousSequence(StartingPosition startingTile, TeamColor teamColor);
+  
 };
 
 

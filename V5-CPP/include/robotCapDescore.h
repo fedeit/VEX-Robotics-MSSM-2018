@@ -5,10 +5,10 @@
 
 class RobotCapDescore {
   DescorePosition currentPosition = retracted;
-  void extend();
-  void retract();
 public:
   void toggle();
+  void extend();
+  void retract();
 };
 
 #endif

@@ -1,7 +1,7 @@
 {
     "py/object": "pros.conductor.project.Project",
     "py/state": {
-        "project_name": "TempV5Code",
+        "project_name": "VEX Competition project",
         "target": "v5",
         "templates": {
             "kernel": {
