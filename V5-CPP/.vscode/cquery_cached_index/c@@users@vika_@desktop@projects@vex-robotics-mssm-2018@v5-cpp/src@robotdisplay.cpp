@@ -1,3 +1,4 @@
+#include "main.h"
 #include "robotDisplay.h"
 
 TeamColor RobotDisplay::chooseTeamColor() {
@@ -10,6 +11,7 @@ TeamColor RobotDisplay::chooseTeamColor() {
     } else if (pros::lcd::read_buttons() == 2){
         return TeamColor::red;
     }
+    return TeamColor::red;
 }
 
 StartingPosition RobotDisplay::chooseStartingTile() {
@@ -22,4 +24,5 @@ StartingPosition RobotDisplay::chooseStartingTile() {
     } else if (pros::lcd::read_buttons() == 2){
         return StartingPosition::back;
     }
+    return StartingPosition::back;
 }

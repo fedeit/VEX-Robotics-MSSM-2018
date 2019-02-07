@@ -2,11 +2,21 @@
 #include "main.h"
 
 Robot::Robot() {
-  
+
 }
 
 void Robot::runAutonomous() {
     AutonomousSequence autoSequence = AutonomousSequence(startPos, teamColor);
+
+    /*
+     * 1. Shoot the top flag
+     * 2. Go fwd, hit the bottom flag
+     * 3. Go fwd with the flipper on, flip the cap
+     * 4. Get on the platform
+     * 5. If enough time, add more flag/cap
+     */
+    tankAssembly.moveByTiles(200, 2);
+    tankAssembly.moveByTiles(-200, 1);
 }
 
 void Robot::runManual() {

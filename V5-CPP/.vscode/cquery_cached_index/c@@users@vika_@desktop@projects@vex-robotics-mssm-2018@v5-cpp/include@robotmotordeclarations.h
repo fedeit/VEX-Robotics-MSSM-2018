@@ -1,6 +1,9 @@
 #ifndef ROBOT_MOTOR_DECLARATIONS_H
 #define ROBOT_MOTOR_DECLARATIONS_H
 
+#include "api.h"
+#include "robot.h"
+
 using namespace pros;
 
 extern Robot robot;
@@ -18,6 +21,6 @@ extern Motor ballLoader;
 extern Motor ballShooter;
 
 extern Motor capFlipper;
-extern Motor capDebouncer;
+extern Motor capDescore;
 
 #endif
