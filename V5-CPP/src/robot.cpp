@@ -1,8 +1,9 @@
 #include "robot.h"
 #include "main.h"
+#include "robotMotorDeclarations.h"
 
 Robot::Robot() {
-
+  capDescore.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
 }
 
 void Robot::runAutonomous() {
@@ -20,35 +21,33 @@ void Robot::runAutonomous() {
 }
 
 void Robot::runManual() {
+    bool previouslyActive = false;
     while (true) {
-        // read joystick movements
-        // read buttons pressed
-        // Do we want to create a controller class that has logs buttons pressed
-        // and has call back functions on the hardware instance vars of the robot?
         int left = master.get_analog(ANALOG_LEFT_Y);
     		int right = master.get_analog(ANALOG_RIGHT_Y);
         tankAssembly.moveLeftSide(left);
         tankAssembly.moveRightSide(right);
 
-        if (master.get_digital_new_press(DIGITAL_Y)) {
+        if (master.get_digital_new_press(DIGITAL_R1)) {
           capFlipper.toggleFlipper();
         }
-        if (master.get_digital_new_press(DIGITAL_A)) {
+        if (master.get_digital_new_press(DIGITAL_R2)) {
           capFlipper.toggleReversedFlipper();
+          ballIntake.toggleIntake();
         }
 
-        if (master.get_digital(DIGITAL_X)) {
+        if (master.get_digital(DIGITAL_L1)) {
           ballShooter.spin();
         } else {
           ballShooter.stop();
         }
 
-        if (master.get_digital_new_press(DIGITAL_R1)) {
-          ballIntake.toggleIntake();
-        }
-
-        if (master.get_digital_new_press(DIGITAL_Y)) {
-          descore.toggle();
+        if (master.get_digital(DIGITAL_UP)) {
+          previouslyActive = true;
+          descore.extend();
+        } else if (!master.get_digital(DIGITAL_UP) && previouslyActive) {
+          descore.retract();
+          previouslyActive = false;
         }
 
         pros::delay(20);

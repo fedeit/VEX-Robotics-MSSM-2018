@@ -42,6 +42,7 @@ void RobotTankAssembly::moveLeftSide(std::int8_t velocity) {
     baseMotorLeftBack.move(velocity);
 }
 
+<<<<<<< HEAD
 void RobotTankAssembly::moveRightSide(std::int8_t velocity) {
     baseMotorRightFront.move(velocity);
     baseMotorRightBack.move(velocity);
@@ -57,6 +58,29 @@ void RobotTankAssembly::moveBase(std::int32_t velocity, double position) {
 void RobotTankAssembly::moveRightSide(std::int32_t velocity, double position) {
   baseMotorRightFront.move_relative(position, velocity);
   baseMotorRightBack.move_relative(position, velocity);
+=======
+// Used by the autonomous function
+void RobotTankAssembly::moveByTiles(double speed, double tiles) {
+  float distance = tiles;
+  baseMotorLeftBack.move_absolute(distance, 100); // Moves 100 units forward
+  baseMotorLeftFront.move_absolute(distance, 100); // Moves 100 units forward
+  baseMotorRightFront.move_absolute(distance, 100); // Moves 100 units forward
+  baseMotorRightBack.move_absolute(distance, 100); // Moves 100 units forward
+
+  while (!((baseMotorRightBack.get_position() < distance + 5) && (baseMotorRightBack.get_position() > distance - 5))) {
+    pros::delay(2);
+  }
+
+  baseMotorRightBack.move(0);
+  baseMotorLeftFront.move(0);
+  baseMotorRightFront.move(0);
+  baseMotorLeftBack.move(0);
+
+  baseMotorRightBack.tare_position();
+  baseMotorLeftFront.tare_position();
+  baseMotorRightFront.tare_position();
+  baseMotorLeftBack.tare_position();
+>>>>>>> fbff09d6c8eb84b7a11a9d8803b67f762c1400b2
 }
 
 void RobotTankAssembly::moveLeftSide(std::int32_t velocity, double position) {
