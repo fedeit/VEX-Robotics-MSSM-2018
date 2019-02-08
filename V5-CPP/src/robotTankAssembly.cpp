@@ -1,4 +1,5 @@
 #include "main.h"
+#include "robot.h"
 #include "robotTankAssembly.h"
 #include "robotMotorDeclarations.h"
 #include "teamColor.h"
@@ -49,26 +50,34 @@ void RobotTankAssembly::moveRightSide(std::int8_t velocity) {
 
 // Move by specified relative position
 // Used in autonomous
-void RobotTankAssembly::moveBase(std::int32_t velocity, double position) {
+void RobotTankAssembly::moveBase(std::uint32_t velocity, double position) {
     moveLeftSide(velocity, position);
     moveRightSide(velocity, position);
 }
 
-void RobotTankAssembly::moveRightSide(std::int32_t velocity, double position) {
+void RobotTankAssembly::moveRightSide(std::uint32_t velocity, double position) {
   baseMotorRightFront.move_relative(position, velocity);
   baseMotorRightBack.move_relative(position, velocity);
 }
 
-void RobotTankAssembly::moveLeftSide(std::int32_t velocity, double position) {
+void RobotTankAssembly::moveLeftSide(std::uint32_t velocity, double position) {
   baseMotorLeftFront.move_relative(position, velocity);
   baseMotorLeftBack.move_relative(position, velocity);
 }
 
 // Used by the autonomous function
-void RobotTankAssembly::moveByTiles(std::int32_t velocity, unsigned int tiles) {
-  moveBase(velocity, velocity > 0 ? tiles*TILE_SIZE : -tiles*TILE_SIZE);
+void RobotTankAssembly::moveByTiles(std::uint32_t speed, double tiles) {
+  moveBase(speed, tiles*TILE_SIZE);
+  while (baseMotorLeftBack.get_actual_velocity() != 0) {
+    pros::delay(2);
+  }
 }
 
+/// \param angle From -180 to +180, positive is clockwise
 void RobotTankAssembly::rotateBaseByAngle(double angle) {
-  // Rotation by the angle
+  moveLeftSide(200, angle/90*_90_DEGREE_ROTATION);
+  moveRightSide(200, -angle/90*_90_DEGREE_ROTATION);
+  while (baseMotorLeftBack.get_actual_velocity() != 0) {
+    pros::delay(2);
+  }
 }

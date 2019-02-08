@@ -16,12 +16,12 @@ public:
     void moveRightSide(std::int8_t velocity);
 
     // Relative movement
-    void moveBase(std::int32_t velocity, double position);
-    void moveLeftSide(std::int32_t velocity, double position);
-    void moveRightSide(std::int32_t velocity, double position);
+    void moveBase(std::uint32_t velocity, double position);
+    void moveLeftSide(std::uint32_t velocity, double position);
+    void moveRightSide(std::uint32_t velocity, double position);
 
     // Mainly used by autonomous sequences
-    void moveByTiles(std::int32_t velocity, unsigned int tiles);
+    void moveByTiles(std::uint32_t velocity, double tiles);
     void rotateBaseByAngle(double angle);
 };
 

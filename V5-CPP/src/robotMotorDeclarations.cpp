@@ -7,17 +7,17 @@ using namespace pros;
 //torqueLiftLeft = Motor(4, E_MOTOR_GEARSET_36, false);
 //torqueLiftRight = Motor(2, E_MOTOR_GEARSET_36, false);
 Robot robot = Robot();
-Motor baseMotorLeftFront = Motor(2, E_MOTOR_GEARSET_18, false);
-Motor baseMotorRightFront = Motor(20, E_MOTOR_GEARSET_18, true);
-Motor baseMotorLeftBack = Motor(9, E_MOTOR_GEARSET_18, false);
-Motor baseMotorRightBack  = Motor(13, E_MOTOR_GEARSET_18, true);
+Motor baseMotorLeftFront = Motor(2, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor baseMotorRightFront = Motor(20, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
+Motor baseMotorLeftBack = Motor(9, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor baseMotorRightBack  = Motor(13, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
 
 //Motor clawMotor;
 //Motor torqueLiftLeft;
 //Motor torqueLiftRight;
 
-Motor ballLoader = Motor(19, E_MOTOR_GEARSET_18, false);
-Motor ballShooter = Motor(12, E_MOTOR_GEARSET_36, true);
+Motor ballLoader = Motor(19, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor ballShooter = Motor(12, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 
-Motor capFlipper = Motor(10,E_MOTOR_GEARSET_18, false);
-Motor capDescore = Motor(8,E_MOTOR_GEARSET_18, true);
+Motor capFlipper = Motor(10,E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor capDescore = Motor(8,E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);
