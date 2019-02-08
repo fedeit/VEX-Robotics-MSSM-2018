@@ -1,0 +1,7 @@
+(A) Modify the autonomous constants. @autonomous
+(B) Add shooting. @autonomous
+Add second flag shooting? Stop on the first tile before hitting the lower flag. @autonomous
+(B) Modify the descore brake constant. @descore
+(A) Check if the speed is adecuate. @descore
+(C) Slow down at the ends. @descore
+Clean up headers + descore toggle? @other
