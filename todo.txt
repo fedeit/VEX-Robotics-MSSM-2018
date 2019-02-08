@@ -5,3 +5,4 @@ Add second flag shooting? Stop on the first tile before hitting the lower flag. 
 (A) Check if the speed is adecuate. @descore
 (C) Slow down at the ends. @descore
 Clean up headers + descore toggle? @other
+(A) Check the X button
