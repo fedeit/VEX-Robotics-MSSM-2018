@@ -12,8 +12,11 @@ void AutonomousSequence::runSequence() {
     angleFlipFactor = -1;
   }
 
-  robot.tankAssembly.moveByTiles(100, 3);
-  robot.tankAssembly.moveByTiles(-100, 1);
-  robot.tankAssembly.rotateBaseByAngle(angleFlipFactor * 90);
-  robot.tankAssembly.moveByTiles(100, 1);
+  motorBallShooter.tare_position();
+  motorBallShooter.move_voltage(12000);
+  while (motorBallShooter.get_position() <= 4400) {
+
+  }
+  motorBallShooter.move(0);
+  // robot.tankAssembly.moveByTiles(200, 3);
 }
