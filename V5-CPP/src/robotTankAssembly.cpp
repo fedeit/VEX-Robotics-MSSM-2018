@@ -43,7 +43,7 @@ void RobotTankAssembly::moveByTiles(int speed, double tiles) {
   baseMotorLeftBack.tare_position();
   baseMotorRightBack.tare_position();
 
-  while (!((baseMotorLeftBack.get_position() < tiles * TILE_SIZE + 5) && (baseMotorLeftBack.get_position() > tiles * TILE_SIZE - 5))) {
+  while (!((baseMotorLeftBack.get_position() < abs(tiles * TILE_SIZE) + 5) && (baseMotorLeftBack.get_position() > abs(tiles * TILE_SIZE) - 5))) {
     pros::delay(2);
   }
 }

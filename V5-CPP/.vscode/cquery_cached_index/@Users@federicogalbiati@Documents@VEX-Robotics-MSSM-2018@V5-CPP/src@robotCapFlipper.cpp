@@ -2,7 +2,7 @@
 #include "robotMotorDeclarations.h"
 
 void RobotCapFlipper::spinFlipper() {
-  motorCapFlipper.move(80);
+  motorCapFlipper.move(100);
 }
 
 void RobotCapFlipper::reversedFlipper() {

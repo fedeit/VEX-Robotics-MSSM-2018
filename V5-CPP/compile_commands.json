@@ -153,38 +153,6 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/robotCapFlipper.cpp.o",
-            "src/robotCapFlipper.cpp"
-        ],
-        "directory": "/Users/federicogalbiati/Documents/VEX-Robotics-MSSM-2018/V5-CPP",
-        "file": "src/robotCapFlipper.cpp"
-    },
-    {
-        "arguments": [
-            "clang++",
-            "-c",
-            "-target",
-            "armv7ar-none-none-eabi",
-            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/include/c++/6.3.1",
-            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/include/c++/6.3.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
-            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/include/c++/6.3.1/backward",
-            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/include",
-            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/include-fixed",
-            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/include",
-            "-iquote./include",
-            "-iquote./include/./",
-            "-mcpu=cortex-a9",
-            "-mfpu=neon-fp16",
-            "-mfloat-abi=softfp",
-            "-D_POSIX_THREADS",
-            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
-            "-Os",
-            "-funwind-tables",
-            "-ffunction-sections",
-            "-fdata-sections",
-            "-fdiagnostics-color",
-            "--std=gnu++17",
-            "-o",
             "bin/robotBallIntake.cpp.o",
             "src/robotBallIntake.cpp"
         ],
@@ -377,11 +345,11 @@
             "-fdiagnostics-color",
             "--std=gnu++17",
             "-o",
-            "bin/autonomousSequence.cpp.o",
-            "src/autonomousSequence.cpp"
+            "bin/robotCapFlipper.cpp.o",
+            "src/robotCapFlipper.cpp"
         ],
         "directory": "/Users/federicogalbiati/Documents/VEX-Robotics-MSSM-2018/V5-CPP",
-        "file": "src/autonomousSequence.cpp"
+        "file": "src/robotCapFlipper.cpp"
     },
     {
         "arguments": [
@@ -478,5 +446,37 @@
         ],
         "directory": "/Users/federicogalbiati/Documents/VEX-Robotics-MSSM-2018/V5-CPP",
         "file": "src/robot.cpp"
+    },
+    {
+        "arguments": [
+            "clang++",
+            "-c",
+            "-target",
+            "armv7ar-none-none-eabi",
+            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/include/c++/6.3.1",
+            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/include/c++/6.3.1/arm-none-eabi/thumb/v7-ar/fpv3/softfp",
+            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/include/c++/6.3.1/backward",
+            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/include",
+            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/include-fixed",
+            "-isystem/usr/local/lib/pros-toolchain/bin/../lib/gcc/arm-none-eabi/6.3.1/../../../../arm-none-eabi/include",
+            "-iquote./include",
+            "-iquote./include/./",
+            "-mcpu=cortex-a9",
+            "-mfpu=neon-fp16",
+            "-mfloat-abi=softfp",
+            "-D_POSIX_THREADS",
+            "-D_UNIX98_THREAD_MUTEX_ATTRIBUTES",
+            "-Os",
+            "-funwind-tables",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fdiagnostics-color",
+            "--std=gnu++17",
+            "-o",
+            "bin/autonomousSequence.cpp.o",
+            "src/autonomousSequence.cpp"
+        ],
+        "directory": "/Users/federicogalbiati/Documents/VEX-Robotics-MSSM-2018/V5-CPP",
+        "file": "src/autonomousSequence.cpp"
     }
 ]
