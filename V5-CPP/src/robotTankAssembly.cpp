@@ -29,6 +29,7 @@ void RobotTankAssembly::moveLeftSide(int velocity, double distance) {
 }
 
 void RobotTankAssembly::moveRightSide(int  velocity, double distance) {
+
   baseMotorRightFront.move_relative(distance, velocity);
   baseMotorRightBack.move_relative(distance, velocity);
 }
@@ -36,7 +37,13 @@ void RobotTankAssembly::moveRightSide(int  velocity, double distance) {
 // Used by the autonomous function
 void RobotTankAssembly::moveByTiles(int speed, double tiles) {
   moveBase(speed, tiles * TILE_SIZE);
-  while (baseMotorLeftBack.get_actual_velocity() != 0) {
+
+  baseMotorLeftFront.tare_position();
+  baseMotorRightFront.tare_position();
+  baseMotorLeftBack.tare_position();
+  baseMotorRightBack.tare_position();
+
+  while (!((baseMotorLeftBack.get_position() < tiles * TILE_SIZE + 5) && (baseMotorLeftBack.get_position() > tiles * TILE_SIZE - 5))) {
     pros::delay(2);
   }
 }

@@ -16,8 +16,8 @@ Motor baseMotorRightBack  = Motor(13, E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_
 //Motor torqueLiftLeft;
 //Motor torqueLiftRight;
 
-Motor ballLoader = Motor(19, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor motorBallLoader = Motor(19, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 Motor motorBallShooter = Motor(12, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
 
-Motor capFlipper = Motor(10,E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+Motor motorCapFlipper = Motor(10,E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 Motor capDescore = Motor(8,E_MOTOR_GEARSET_18, true, E_MOTOR_ENCODER_DEGREES);

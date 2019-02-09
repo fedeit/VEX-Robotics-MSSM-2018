@@ -16,14 +16,14 @@
 class Robot {
     pros::Controller master = pros::Controller(pros::E_CONTROLLER_MASTER);
 public:
-    RobotBallIntake ballIntake;
-    RobotBallShooter ballShooter;
-    RobotCapFlipper capFlipper;
-    RobotCapDescore descore;
-    RobotTankAssembly tankAssembly;
+    RobotBallIntake ballIntake = RobotBallIntake();
+    RobotBallShooter ballShooter = RobotBallShooter();
+    RobotCapFlipper capFlipper = RobotCapFlipper();
+    RobotCapDescore descore = RobotCapDescore();
+    RobotTankAssembly tankAssembly = RobotTankAssembly();
     StartingPosition startPos;
     TeamColor teamColor;
-    RobotDisplay brainDisplay;
+    RobotDisplay brainDisplay = RobotDisplay();
     Robot();
     void runAutonomous();
     void runManual();

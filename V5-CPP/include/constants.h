@@ -10,4 +10,4 @@
 const double TILE_SIZE = 2000;
 
 /// \var 90_DEGREE_ROTATION Describes the rotation needed for one side to turn the robot 90 degrees. Measured in motor's encoder units
-const double _90_DEGREE_ROTATION = 100;
+const double _90_DEGREE_ROTATION = 1000;

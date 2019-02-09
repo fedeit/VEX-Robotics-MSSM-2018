@@ -2,14 +2,29 @@
 #include "main.h"
 #include "robotMotorDeclarations.h"
 
+using namespace std;
+
 Robot::Robot() {
-  capDescore.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  motorBallShooter.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
 }
 
 void Robot::runAutonomous() {
-    AutonomousSequence autoSequence = AutonomousSequence(startPos, teamColor);
-    autoSequence.runSequence();
+    // AutonomousSequence autoSequence = AutonomousSequence(startPos, teamColor);
+    // autoSequence.runSequence();
+    tankAssembly = RobotTankAssembly();
+    tankAssembly.moveByTiles(200, 1);
+
+    motorBallLoader.tare_position();
+    robot.ballIntake.spinIntake();
+    robot.capFlipper.reversedFlipper();
+
+    motorBallShooter.tare_position();
+    motorBallShooter.move_voltage(12000);
+
+    motorBallShooter.move_voltage(0);
+    robot.ballIntake.stop();
+    robot.capFlipper.stop();
+    cout << "somketing" << endl;
 }
 
 void Robot::runManual() {
@@ -70,6 +85,12 @@ void Robot::runManual() {
           previouslyActive = false;
         }
         pros::delay(20);
+
+        if (master.get_digital_new_press(DIGITAL_DOWN)) {
+          teamColor = red;
+          startPos = front;
+          runAutonomous();
+        }
     }
 }
 

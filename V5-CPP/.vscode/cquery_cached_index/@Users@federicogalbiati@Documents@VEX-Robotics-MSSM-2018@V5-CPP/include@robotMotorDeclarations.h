@@ -17,10 +17,10 @@ extern Motor baseMotorRightBack;
 //extern Motor torqueLiftLeft;
 //extern Motor torqueLiftRight;
 
-extern Motor ballLoader;
+extern Motor motorBallLoader;
 extern Motor motorBallShooter;
 
-extern Motor capFlipper;
+extern Motor motorCapFlipper;
 extern Motor capDescore;
 
 #endif
