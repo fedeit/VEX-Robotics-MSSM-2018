@@ -3,9 +3,9 @@
 
 class RobotBallIntake {
 public:
-    void toggleIntake();
+    void spinIntake();
     void reverseIntake();
+    void stop();
 };
 
 #endif
-

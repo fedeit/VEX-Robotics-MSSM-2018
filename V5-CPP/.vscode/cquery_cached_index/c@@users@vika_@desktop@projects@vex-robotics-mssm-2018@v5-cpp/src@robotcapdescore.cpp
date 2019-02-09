@@ -3,11 +3,7 @@
 
 
 void RobotCapDescore::extend() {
-  if (capDescore.get_position() > 400) {
-     capDescore.move_voltage(0);
-  } else {
-    capDescore.move_voltage(8000);
-  }
+  capDescore.move_absolute(200, 70);
 }
 
 void RobotCapDescore::retract() {

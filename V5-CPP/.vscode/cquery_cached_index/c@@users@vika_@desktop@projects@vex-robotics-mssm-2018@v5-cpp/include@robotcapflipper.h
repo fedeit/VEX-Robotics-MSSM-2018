@@ -3,8 +3,9 @@
 
 class RobotCapFlipper {
 public:
-    void toggleFlipper();
-    void toggleReversedFlipper();
+    void spinFlipper();
+    void reversedFlipper();
+    void stop();
 };
 
 #endif

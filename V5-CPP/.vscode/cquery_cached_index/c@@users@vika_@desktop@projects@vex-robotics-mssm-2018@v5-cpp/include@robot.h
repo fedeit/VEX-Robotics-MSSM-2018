@@ -14,6 +14,8 @@
 #include "autonomousSequence.h"
 
 class Robot {
+    pros::Controller master = pros::Controller(pros::E_CONTROLLER_MASTER);
+public:
     RobotBallIntake ballIntake;
     RobotBallShooter ballShooter;
     RobotCapFlipper capFlipper;
@@ -22,8 +24,6 @@ class Robot {
     StartingPosition startPos;
     TeamColor teamColor;
     RobotDisplay brainDisplay;
-    pros::Controller master = pros::Controller(pros::E_CONTROLLER_MASTER);
-public:
     Robot();
     void runAutonomous();
     void runManual();
