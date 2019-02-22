@@ -2,14 +2,15 @@
 #include "main.h"
 #include "robotMotorDeclarations.h"
 
+using namespace std;
+
 Robot::Robot() {
-  capDescore.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
-  motorBallShooter.set_brake_mode(pros::E_MOTOR_BRAKE_HOLD);
+
 }
 
 void Robot::runAutonomous() {
-    AutonomousSequence autoSequence = AutonomousSequence(startPos, teamColor);
-    autoSequence.runSequence();
+  AutonomousSequence autoSequence = AutonomousSequence(startPos, teamColor);
+  autoSequence.runSequence();
 }
 
 void Robot::runManual() {
@@ -70,10 +71,31 @@ void Robot::runManual() {
           previouslyActive = false;
         }
         pros::delay(20);
+
+        if (master.get_digital_new_press(DIGITAL_LEFT)) {
+          runAutonomous();
+        }
     }
 }
 
 void Robot::runDisplaySetup() {
-    teamColor = brainDisplay.chooseTeamColor();
-    startPos = brainDisplay.chooseStartingTile();
+  bool checker = true;
+  bool colorSatisfied = false;
+  bool tileSatisfied = false;
+
+  while (checker) {
+    if (!colorSatisfied)
+      teamColor = robot.brainDisplay.chooseTeamColor();
+
+    pros::delay(2);
+    if (!tileSatisfied)
+      startPos = robot.brainDisplay.chooseStartingTile();
+
+    colorSatisfied = robot.brainDisplay.checkColor();
+    tileSatisfied = robot.brainDisplay.checkTile();
+
+    if (colorSatisfied && tileSatisfied)
+      checker = false;
+  }
+  pros::delay(2);
 }

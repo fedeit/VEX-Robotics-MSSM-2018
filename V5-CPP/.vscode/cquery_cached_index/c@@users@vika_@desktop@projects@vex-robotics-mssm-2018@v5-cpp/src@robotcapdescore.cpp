@@ -3,11 +3,13 @@
 
 
 void RobotCapDescore::extend() {
-  capDescore.move_absolute(200, 70);
+  capDescore.move_absolute(-200, 70);
+  currentPosition = extended;
 }
 
 void RobotCapDescore::retract() {
   capDescore.move_absolute(0, 100);
+  currentPosition = retracted;
 }
 
 void RobotCapDescore::toggle() {

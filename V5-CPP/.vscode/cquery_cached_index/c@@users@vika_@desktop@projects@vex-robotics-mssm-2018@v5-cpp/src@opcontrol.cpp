@@ -15,6 +15,5 @@
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-  std::cout << "Hello" << std::endl;
   robot.runManual();
 }

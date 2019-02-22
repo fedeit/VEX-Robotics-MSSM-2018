@@ -9,54 +9,49 @@ AutonomousSequence::AutonomousSequence(StartingPosition startingPosition, TeamCo
 
 void AutonomousSequence::runSequence() {
   if (startPos == front){
-    ballLoader.tare_position();
     robot.ballIntake.spinIntake();
     robot.capFlipper.reversedFlipper();
 
     motorBallShooter.tare_position();
     motorBallShooter.move_voltage(12000);
-    while (motorBallShooter.get_position() <= 4400) {
-      continue;
-    }
-    motorBallShooter.move(0);
-    robot.tankAssembly.moveByTiles(200, 1);
 
-    motorBallShooter.tare_position();
-    motorBallShooter.move_voltage(12000);
-    while (motorBallShooter.get_position() <= 4400) {
+    while (motorBallShooter.get_position() <= 1000) {
       continue;
     }
 
-    motorBallShooter.move(0);
-    robot.capFlipper.stop();
+    motorBallShooter.move_voltage(0);
 
-    robot.tankAssembly.moveByTiles(200, 1);
-    robot.tankAssembly.moveByTiles(200, -1);
+    robot.tankAssembly.moveBase(127);
+    pros::delay(1500);
 
-    robot.tankAssembly.rotateBaseByAngle(angleFlipFactor*90);
-    robot.capFlipper.spinFlipper();
-    robot.tankAssembly.moveByTiles(200, 1.5);
-    robot.capFlipper.stop();
-    robot.tankAssembly.rotateBaseByAngle(angleFlipFactor*90);
-    robot.capFlipper.reversedFlipper();
-    robot.tankAssembly.moveByTiles(200, 2);
+    robot.tankAssembly.moveBase(-127);
+    pros::delay(2300);
+
+    robot.tankAssembly.moveBase(0);
+    pros::delay(200);
+
+    if (teamColor == red)
+      robot.tankAssembly.moveLeftSide(127);
+    else
+      robot.tankAssembly.moveRightSide(127);
+    pros::delay(800);
+
+    robot.tankAssembly.moveBase(127);
+    pros::delay(1200);
   }
   else {
-    robot.tankAssembly.moveByTiles(200, -1);
-    robot.tankAssembly.rotateBaseByAngle(angleFlipFactor*90);
-    robot.capFlipper.spinFlipper();
-    robot.tankAssembly.moveByTiles(200, 2);
+    robot.tankAssembly.moveBase(127);
+    pros::delay(500);
 
-    robot.tankAssembly.rotateBaseByAngle(-angleFlipFactor*90);
-    robot.tankAssembly.moveByTiles(200, 1);
-    robot.tankAssembly.moveByTiles(200, -1);
+    robot.tankAssembly.moveBase(0);
 
-    robot.tankAssembly.rotateBaseByAngle(angleFlipFactor*90);
-    robot.tankAssembly.moveByTiles(200, -0.5);
+    if (teamColor == red)
+      robot.tankAssembly.moveLeftSide(127);
+    else
+      robot.tankAssembly.moveRightSide(127);
+    pros::delay(800);
 
-    robot.tankAssembly.rotateBaseByAngle(-angleFlipFactor*90);
-
-    robot.capFlipper.reversedFlipper();
-    robot.tankAssembly.moveByTiles(200, 2);
+    robot.tankAssembly.moveBase(127);
+    pros::delay(1200);
   }
 }

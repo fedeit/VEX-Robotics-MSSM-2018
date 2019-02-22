@@ -10,6 +10,7 @@ class RobotTankAssembly {
 public:
 
     // Speed values in rangee +- 127 for joysticks
+    void moveBase(std::int8_t velocity);
     void moveLeftSide(std::int8_t velocity);
     void moveRightSide(std::int8_t velocity);
 
