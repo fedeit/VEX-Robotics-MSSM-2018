@@ -6,7 +6,7 @@ void RobotCapFlipper::spinFlipper() {
 }
 
 void RobotCapFlipper::reversedFlipper() {
-  motorCapFlipper.move(-80);
+  motorCapFlipper.move(-70);
 }
 
 void RobotCapFlipper::stop() {

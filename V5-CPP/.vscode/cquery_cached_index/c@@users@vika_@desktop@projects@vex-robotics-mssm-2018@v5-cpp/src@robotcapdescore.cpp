@@ -8,7 +8,7 @@ void RobotCapDescore::extend() {
 }
 
 void RobotCapDescore::retract() {
-  capDescore.move_absolute(0, 100);
+  capDescore.move_absolute(0, 70);
   currentPosition = retracted;
 }
 

@@ -25,7 +25,7 @@ void AutonomousSequence::runSequence() {
     pros::delay(1500);
 
     robot.tankAssembly.moveBase(-127);
-    pros::delay(2300);
+    pros::delay(2400);
 
     robot.tankAssembly.moveBase(0);
     pros::delay(200);
