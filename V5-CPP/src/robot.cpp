@@ -72,8 +72,15 @@ void Robot::runManual() {
         }
         pros::delay(20);
 
-        if (master.get_digital_new_press(DIGITAL_LEFT)) {
-          runAutonomous();
+        // UNCOMMENT FOR TESTING ONLY
+        // if (master.get_digital_new_press(DIGITAL_LEFT)) {
+        //   runAutonomous();
+        // }
+
+        if (master.get_digital(/*DECIDE BUTTON*/)) {
+          lift.toggleUp();
+        } else if (master.get_digital(/*DECIDE BUTTON*/)) {
+          lift.toggleDown();
         }
     }
 }

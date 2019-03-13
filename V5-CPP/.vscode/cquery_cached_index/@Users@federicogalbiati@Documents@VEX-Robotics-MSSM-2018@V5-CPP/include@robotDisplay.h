@@ -8,6 +8,8 @@ class RobotDisplay {
 public:
     TeamColor chooseTeamColor();
     StartingPosition chooseStartingTile();
+    bool checkColor();
+    bool checkTile();
 };
 
 #endif

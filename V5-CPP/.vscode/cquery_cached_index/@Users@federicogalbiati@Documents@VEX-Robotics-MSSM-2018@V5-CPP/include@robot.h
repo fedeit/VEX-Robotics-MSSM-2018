@@ -10,6 +10,7 @@
 #include "robotTankAssembly.h"
 #include "robotCapFlipper.h"
 #include "robotCapDescore.h"
+#include "robotLift.h"
 #include "startingPosition.h"
 #include "autonomousSequence.h"
 
@@ -20,6 +21,7 @@ public:
     RobotBallShooter ballShooter = RobotBallShooter();
     RobotCapFlipper capFlipper = RobotCapFlipper();
     RobotCapDescore descore = RobotCapDescore();
+    RobotLift lift = RobotLift();
     RobotTankAssembly tankAssembly = RobotTankAssembly();
     StartingPosition startPos;
     TeamColor teamColor;

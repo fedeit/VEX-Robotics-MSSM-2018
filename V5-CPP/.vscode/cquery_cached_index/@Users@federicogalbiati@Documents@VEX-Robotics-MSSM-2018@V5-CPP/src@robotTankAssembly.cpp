@@ -6,6 +6,11 @@
 #include "direction.h"
 #include "constants.h"
 
+void RobotTankAssembly::moveBase(std::int8_t velocity) {
+  moveLeftSide(velocity);
+  moveRightSide(velocity);
+}
+
 void RobotTankAssembly::moveLeftSide(std::int8_t velocity) {
     baseMotorLeftFront.move(velocity);
     baseMotorLeftBack.move(velocity);
@@ -43,9 +48,11 @@ void RobotTankAssembly::moveByTiles(int speed, double tiles) {
   baseMotorLeftBack.tare_position();
   baseMotorRightBack.tare_position();
 
-  while (!((baseMotorLeftBack.get_position() < abs(tiles * TILE_SIZE) + 5) && (baseMotorLeftBack.get_position() > abs(tiles * TILE_SIZE) - 5))) {
+  while (!((fabs(baseMotorLeftBack.get_position()) < fabs((tiles * TILE_SIZE) + 5)) && fabs(baseMotorLeftBack.get_position()) > fabs((tiles * TILE_SIZE) - 5))) {
     pros::delay(2);
   }
+
+  moveBase(0);
 }
 
 /// \param angle From -180 to +180, positive is clockwise
