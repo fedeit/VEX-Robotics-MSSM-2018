@@ -9,10 +9,8 @@ Robot::Robot() {
 }
 
 void Robot::runAutonomous() {
-  startPos =  front;
-  teamColor = blue;
-    AutonomousSequence autoSequence = AutonomousSequence(startPos, teamColor);
-    autoSequence.runSequence();
+  AutonomousSequence autoSequence = AutonomousSequence(startPos, teamColor);
+  autoSequence.runSequence();
 }
 
 void Robot::runManual() {
@@ -74,15 +72,37 @@ void Robot::runManual() {
         }
         pros::delay(20);
 
-        // if (master.get_digital_new_press(DIGITAL_DOWN)) {
-        //   teamColor = blue;
-        //   startPos = front;
+        // UNCOMMENT FOR TESTING ONLY
+        // if (master.get_digital_new_press(DIGITAL_LEFT)) {
         //   runAutonomous();
         // }
+
+        if (master.get_digital(/*DECIDE BUTTON*/)) {
+          lift.toggleUp();
+        } else if (master.get_digital(/*DECIDE BUTTON*/)) {
+          lift.toggleDown();
+        }
     }
 }
 
 void Robot::runDisplaySetup() {
-    teamColor = brainDisplay.chooseTeamColor();
-    startPos = brainDisplay.chooseStartingTile();
+  bool checker = true;
+  bool colorSatisfied = false;
+  bool tileSatisfied = false;
+
+  while (checker) {
+    if (!colorSatisfied)
+      teamColor = robot.brainDisplay.chooseTeamColor();
+
+    pros::delay(2);
+    if (!tileSatisfied)
+      startPos = robot.brainDisplay.chooseStartingTile();
+
+    colorSatisfied = robot.brainDisplay.checkColor();
+    tileSatisfied = robot.brainDisplay.checkTile();
+
+    if (colorSatisfied && tileSatisfied)
+      checker = false;
+  }
+  pros::delay(2);
 }

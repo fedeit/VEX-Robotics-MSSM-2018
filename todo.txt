@@ -1,8 +1,5 @@
-(A) Modify the autonomous constants. @autonomous
-(B) Add shooting. @autonomous
-Add second flag shooting? Stop on the first tile before hitting the lower flag. @autonomous
-(B) Modify the descore brake constant. @descore
-(A) Check if the speed is adecuate. @descore
-(C) Slow down at the ends. @descore
-Clean up headers + descore toggle? @other
-(A) Check the X button
+(A) Add the level variable change when toggled in lift files
+(B) Clean it up
+(C) Constants - lift
+(D) Private motors, only accessible from Robot class
+(E) ...

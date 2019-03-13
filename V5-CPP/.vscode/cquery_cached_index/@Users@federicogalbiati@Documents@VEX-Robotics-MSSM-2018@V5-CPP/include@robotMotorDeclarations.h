@@ -17,6 +17,8 @@ extern Motor baseMotorRightBack;
 //extern Motor torqueLiftLeft;
 //extern Motor torqueLiftRight;
 
+extern Motor liftMotor;
+
 extern Motor motorBallLoader;
 extern Motor motorBallShooter;
 
