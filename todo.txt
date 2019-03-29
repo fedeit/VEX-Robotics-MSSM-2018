@@ -1,5 +1,0 @@
-(A) Add the level variable change when toggled in lift files
-(B) Clean it up
-(C) Constants - lift
-(D) Private motors, only accessible from Robot class
-(E) ...
