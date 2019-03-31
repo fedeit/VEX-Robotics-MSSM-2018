@@ -22,7 +22,7 @@ private:
 
   Motor liftMotorLeft = Motor(2, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
   Motor liftMotorRight = Motor(9, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
-  Motor clawMotor = Motor(3, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
+  Motor clawMotor = Motor(3, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
 public:
   void extend();
   void retract();
