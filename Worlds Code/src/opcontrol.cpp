@@ -24,14 +24,10 @@ void opcontrol() {
 		if (robot.controller.get_digital(DIGITAL_R1)) {
 			robot.lift.extend();
 		}
-		else if (!robot.controller.get_digital(DIGITAL_R2)) {
-			robot.lift.stop();
-		}
-
-		if (robot.controller.get_digital(DIGITAL_R2)) {
+		else if (robot.controller.get_digital(DIGITAL_R2)) {
 			robot.lift.retract();
 		}
-		else if (!robot.controller.get_digital(DIGITAL_R1)){
+		else {
 			robot.lift.stop();
 		}
 
