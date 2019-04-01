@@ -9,6 +9,7 @@
 void initialize() {
 	pros::lcd::initialize();
 	Robot robot = Robot();
+	robot.calibrate();
 }
 
 /**
@@ -27,4 +28,6 @@ void disabled() {}
  * This task will exit when the robot is enabled and autonomous or opcontrol
  * starts.
  */
-void competition_initialize() {}
+void competition_initialize() {
+	// Auto selection goes here
+}

@@ -20,20 +20,22 @@ void opcontrol() {
 		robot.tankAssembly.moveLeftSide(robot.controller.get_analog(ANALOG_LEFT_Y));
 		robot.tankAssembly.moveRightSide(robot.controller.get_analog(ANALOG_RIGHT_Y));
 
+		// Lift contol
 		if (robot.controller.get_digital(DIGITAL_R1)) {
 			robot.lift.extend();
 		}
-		else {
+		else if (!robot.controller.get_digital(DIGITAL_R2)) {
 			robot.lift.stop();
 		}
 
 		if (robot.controller.get_digital(DIGITAL_R2)) {
 			robot.lift.retract();
 		}
-		else {
+		else if (!robot.controller.get_digital(DIGITAL_R1)){
 			robot.lift.stop();
 		}
 
+		// Claw control
 		if (robot.controller.get_digital_new_press(DIGITAL_L1)) {
 			robot.lift.flipClaw();
 		}

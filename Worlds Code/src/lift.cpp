@@ -69,7 +69,7 @@ void Lift::flipClawBack() {
 }
 
 void Lift::flipClawForward() {
-  this->clawMotor.move_absolute(175, 100);
+  this->clawMotor.move_absolute(180, 100);
   this->clawState = flipped;
 
 }
@@ -83,4 +83,8 @@ void Lift::flipClaw() {
       flipClawForward();
       break;
   }
+}
+
+void Lift::calibrate() {
+  this->liftPotentiometer.calibrate();
 }

@@ -23,6 +23,7 @@ private:
   Motor liftMotorLeft = Motor(2, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
   Motor liftMotorRight = Motor(9, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
   Motor clawMotor = Motor(3, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
+  ADIPotentiometer liftPotentiometer = ADIPotentiometer(4/*Potentiometer port*/);
 public:
   void extend();
   void retract();
@@ -36,6 +37,8 @@ public:
   void flipClawBack();
   void flipClawForward();
   void flipClaw();
+
+  void calibrate();
 };
 
 #endif
