@@ -30,19 +30,24 @@ void opcontrol() {
 
 		// Lift contol
 		if (robot.controller.get_digital(DIGITAL_X)) {
+			robot.lift.holdMode = latest;
 			robot.lift.extend(127);
 		}
 		else if (robot.controller.get_digital(DIGITAL_B)) {
+			robot.lift.holdMode = latest;
 			robot.lift.retract(127);
 		}
 		else if (robot.controller.get_digital(DIGITAL_R1)) {
 			robot.lift.highPolePreset();
+			robot.lift.holdMode = closest;
 		}
 		else if (robot.controller.get_digital(DIGITAL_R2)) {
 			robot.lift.lowPolePreset();
+			robot.lift.holdMode = closest;
 		}
 		else if (robot.controller.get_digital_new_press(DIGITAL_L2)) {
 			robot.lift.retractCompletely();
+			robot.lift.holdMode = closest;
 		}
 		else {
 			robot.lift.holdToClosest();

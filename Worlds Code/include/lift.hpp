@@ -5,8 +5,8 @@
 #define ABOVE_LOW_LEVEL_POT_PRESET 3160
 #define ABOVE_HIGH_LEVEL_POT_PRESET 3850
 
-#define LOW_LEVEL_POT_PRESET 3060
-#define HIGH_LEVEL_POT_PRESET 3650
+#define LOW_LEVEL_POT_PRESET 2860
+#define HIGH_LEVEL_POT_PRESET 3550
 
 #define GROUND_PRESET 1980
 
@@ -24,6 +24,11 @@ enum LiftLevel {
   high
 };
 
+enum HoldMode {
+  closest,
+  latest
+};
+
 class Lift {
 private:
   LiftLevel level = zero;
@@ -36,14 +41,19 @@ public:
   // Lift functions
   void extend(unsigned int);
   void retract(unsigned int);
+
   void toggleUp();
   void toggleDown();
+
   void lowPolePreset();
   void highPolePreset();
   void retractCompletely();
+
   void stop();
+
   void holdToPosition(long int);
   void holdToClosest();
+  void hold();
 
   // Claw functions
   void flipClawBack();
@@ -55,6 +65,7 @@ public:
   int getLiftPotentiometerValue();
 
   ADIPotentiometer liftPotentiometer = ADIPotentiometer('H');
+  HoldMode holdMode = closest;
 };
 
 #endif

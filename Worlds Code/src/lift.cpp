@@ -3,13 +3,13 @@
 #include "stdio.h"
 
 void Lift::holdToPosition(long int position) {
-  while (abs(this->getLiftPotentiometerValue() - position) > 40) {
-    while (this->getLiftPotentiometerValue() < position - 40){
+  while (abs(this->getLiftPotentiometerValue() - position) > 30) {
+    while (this->getLiftPotentiometerValue() < position - 30){
       this->extend(std::min((long int)127, std::max((long int)25, ((long int)position - this->getLiftPotentiometerValue())/3)));
       pros::delay(2);
     }
 
-    while (this->getLiftPotentiometerValue() > position + 40){
+    while (this->getLiftPotentiometerValue() > position + 30){
       std::cout << this->getLiftPotentiometerValue() << " " << position << "\n";
       this->retract(std::min((long int)127, std::max((long int)25,  (this->getLiftPotentiometerValue() - (long int)position)/3)));
       pros::delay(2);
@@ -20,14 +20,14 @@ void Lift::holdToPosition(long int position) {
 }
 
 void Lift::lowPolePreset() {
-  while (abs(this->getLiftPotentiometerValue() - ABOVE_LOW_LEVEL_POT_PRESET) > 40) {
-    while (this->getLiftPotentiometerValue() < ABOVE_LOW_LEVEL_POT_PRESET - 40){
+  while (abs(this->getLiftPotentiometerValue() - ABOVE_LOW_LEVEL_POT_PRESET) > 30) {
+    while (this->getLiftPotentiometerValue() < ABOVE_LOW_LEVEL_POT_PRESET - 30){
       std::cout << this->getLiftPotentiometerValue() << " " << ABOVE_LOW_LEVEL_POT_PRESET << "\n";
       this->extend(std::min((long int)127, std::max((long int)25, ((long int)ABOVE_LOW_LEVEL_POT_PRESET - this->getLiftPotentiometerValue())/3)));
       pros::delay(2);
     }
 
-    while (this->getLiftPotentiometerValue() > ABOVE_LOW_LEVEL_POT_PRESET + 40){
+    while (this->getLiftPotentiometerValue() > ABOVE_LOW_LEVEL_POT_PRESET + 30){
       std::cout << this->getLiftPotentiometerValue() << " " << ABOVE_LOW_LEVEL_POT_PRESET << "\n";
       this->retract(std::min((long int)127, std::max((long int)25,  (this->getLiftPotentiometerValue() - (long int)ABOVE_LOW_LEVEL_POT_PRESET)/3)));
       pros::delay(2);
@@ -83,6 +83,15 @@ void Lift::holdToClosest() {
       break;
     case high:
       this->holdToPosition(HIGH_LEVEL_POT_PRESET);
+  }
+}
+
+void Lift::hold() {
+  if (this->holdMode == latest) {
+    this->holdToPosition(this->getLiftPotentiometerValue());
+  }
+  else {
+    this->holdToClosest();
   }
 }
 
