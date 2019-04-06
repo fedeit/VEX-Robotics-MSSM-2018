@@ -14,14 +14,15 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void debug() {
+void debug_func() {
 	pros::lcd::print(1, "Lift potentiometer value:%d", robot.lift.getLiftPotentiometerValue());
+	pros::delay(10);
 	std::printf("%d\n", robot.lift.getLiftPotentiometerValue());
 }
 
 void opcontrol() {
 	while (true) {
-		debug();
+		debug_func();
 
 		// Drive control
 		robot.tankAssembly.moveLeftSide(robot.controller.get_analog(ANALOG_LEFT_Y));

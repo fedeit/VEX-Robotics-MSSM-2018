@@ -1,11 +1,12 @@
 #ifndef ROBOT_LIFT_H
 #define ROBOT_LIFT_H
 
-#define ABOVE_LOW_LEVEL_POT_PRESET 2000
-#define ABOVE_HIGH_LEVEL_POT_PRESET 3000
+// Constants in potentiometer values (0-4095)
+#define ABOVE_LOW_LEVEL_POT_PRESET 180
+#define ABOVE_HIGH_LEVEL_POT_PRESET 94
 
-#define LOW_LEVEL_POT_PRESET 1980
-#define HIGH_LEVEL_POT_PRESET 2980
+#define LOW_LEVEL_POT_PRESET 190
+#define HIGH_LEVEL_POT_PRESET 85
 
 #include "api.h"
 using namespace pros;
@@ -29,7 +30,6 @@ private:
   Motor liftMotorLeft = Motor(2, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
   Motor liftMotorRight = Motor(9, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);
   Motor clawMotor = Motor(3, E_MOTOR_GEARSET_18, false, E_MOTOR_ENCODER_DEGREES);
-  ADIPotentiometer liftPotentiometer = ADIPotentiometer('F');
 public:
   // Lift functions
   void extend();
@@ -50,7 +50,9 @@ public:
 
   // Misc functions
   void calibrate();
-  std::int32_t getLiftPotentiometerValue();
+  int getLiftPotentiometerValue();
+
+  ADIPotentiometer liftPotentiometer = ADIPotentiometer('H');
 };
 
 #endif

@@ -2,56 +2,70 @@
 #include "robot.hpp"
 #include "stdio.h"
 
-void Lift::holdToPosition(int position) {
-  while (this->liftPotentiometer.get_value_calibrated() - position < -5) {
-    this->extend();
-    pros::delay(2);
+void Lift::holdToPosition(long int position) {
+  while (abs(this->getLiftPotentiometerValue() - position) > 40) {
+    while (this->getLiftPotentiometerValue() < position - 40){
+      this->extend(std::min((long int)127, std::max((long int)25, ((long int)position - this->getLiftPotentiometerValue())/3)));
+      pros::delay(2);
+    }
+
+    while (this->getLiftPotentiometerValue() > position + 40){
+      std::cout << this->getLiftPotentiometerValue() << " " << position << "\n";
+      this->retract(std::min((long int)127, std::max((long int)25,  (this->getLiftPotentiometerValue() - (long int)position)/3)));
+      pros::delay(2);
+    }
   }
 
-  while (this->liftPotentiometer.get_value_calibrated() - position > 5) {
-    this->retract();
-    pros::delay(2);
-  }
+  this->stop();
 }
 
 void Lift::lowPolePreset() {
-  while (this->liftPotentiometer.get_value_calibrated() < ABOVE_LOW_LEVEL_POT_PRESET){
-    this->extend();
-    pros::delay(2);
+  while (abs(this->getLiftPotentiometerValue() - ABOVE_LOW_LEVEL_POT_PRESET) > 40) {
+    while (this->getLiftPotentiometerValue() < ABOVE_LOW_LEVEL_POT_PRESET - 40){
+      std::cout << this->getLiftPotentiometerValue() << " " << ABOVE_LOW_LEVEL_POT_PRESET << "\n";
+      this->extend(std::min((long int)127, std::max((long int)25, ((long int)ABOVE_LOW_LEVEL_POT_PRESET - this->getLiftPotentiometerValue())/3)));
+      pros::delay(2);
+    }
+
+    while (this->getLiftPotentiometerValue() > ABOVE_LOW_LEVEL_POT_PRESET + 40){
+      std::cout << this->getLiftPotentiometerValue() << " " << ABOVE_LOW_LEVEL_POT_PRESET << "\n";
+      this->retract(std::min((long int)127, std::max((long int)25,  (this->getLiftPotentiometerValue() - (long int)ABOVE_LOW_LEVEL_POT_PRESET)/3)));
+      pros::delay(2);
+    }
   }
 
   this->stop();
   this->level = low;
-
-  this->holdToPosition(ABOVE_LOW_LEVEL_POT_PRESET);
 }
 
 void Lift::highPolePreset() {
-  while (this->liftPotentiometer.get_value_calibrated() < ABOVE_HIGH_LEVEL_POT_PRESET){
-    this->extend();
+  while (this->liftPotentiometer.get_value() < ABOVE_HIGH_LEVEL_POT_PRESET - 15){
+    this->extend(127);
     pros::delay(2);
   }
 
   this->stop();
   this->level = high;
-
-  this->holdToPosition(ABOVE_HIGH_LEVEL_POT_PRESET);
 }
 
 void Lift::retractCompletely() {
-  this->liftMotorLeft.move_absolute(0, 100);
-  this->liftMotorRight.move_absolute(0, 100);
+  while (this->liftPotentiometer.get_value() > GROUND_PRESET + 15) {
+    this->retract(127);
+    pros::delay(2);
+  }
+
+  this->stop();
   this->level = zero;
 }
 
-void Lift::extend() {
-  this->liftMotorLeft.move(127);
-  this->liftMotorRight.move(127);
+void Lift::extend(unsigned int speed) {
+  this->liftMotorLeft.move(speed);
+  this->liftMotorRight.move(speed);
 }
 
-void Lift::retract() {
-  this->liftMotorLeft.move(-127);
-  this->liftMotorRight.move(-127);
+void Lift::retract(unsigned int speed) {
+  this->liftMotorLeft.move(-speed);
+  this->liftMotorRight.move(-speed);
 }
 
 void Lift::stop() {
@@ -62,7 +76,7 @@ void Lift::stop() {
 void Lift::holdToClosest() {
   switch(this->level) {
     case zero:
-      this->holdToPosition(5);
+      this->retractCompletely();
       break;
     case low:
       this->holdToPosition(LOW_LEVEL_POT_PRESET);
@@ -122,9 +136,8 @@ void Lift::flipClaw() {
 
 // Misc
 void Lift::calibrate() {
-  this->liftPotentiometer.calibrate();
 }
 
-std::int32_t Lift::getLiftPotentiometerValue() {
-  return this->liftPotentiometer.get_value_calibrated();
+int Lift::getLiftPotentiometerValue() {
+  return this->liftPotentiometer.get_value();
 }

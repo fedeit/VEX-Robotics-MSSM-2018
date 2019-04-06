@@ -3,19 +3,21 @@
 #include "stdio.h"
 
 void Lift::holdToPosition(int position) {
-  while (this->liftPotentiometer.get_value_calibrated() - position < -5) {
+  while (this->liftPotentiometer.get_value_calibrated() - position > 5) {
     this->extend();
     pros::delay(2);
   }
 
-  while (this->liftPotentiometer.get_value_calibrated() - position > 5) {
+  while (this->liftPotentiometer.get_value_calibrated() - position < -5) {
     this->retract();
     pros::delay(2);
   }
+
+  this->stop();
 }
 
 void Lift::lowPolePreset() {
-  while (this->liftPotentiometer.get_value_calibrated() < ABOVE_LOW_LEVEL_POT_PRESET){
+  while (this->liftPotentiometer.get_value_calibrated() > ABOVE_LOW_LEVEL_POT_PRESET){
     this->extend();
     pros::delay(2);
   }
@@ -27,7 +29,7 @@ void Lift::lowPolePreset() {
 }
 
 void Lift::highPolePreset() {
-  while (this->liftPotentiometer.get_value_calibrated() < ABOVE_HIGH_LEVEL_POT_PRESET){
+  while (this->liftPotentiometer.get_value_calibrated() > ABOVE_HIGH_LEVEL_POT_PRESET){
     this->extend();
     pros::delay(2);
   }
@@ -62,7 +64,7 @@ void Lift::stop() {
 void Lift::holdToClosest() {
   switch(this->level) {
     case zero:
-      this->holdToPosition(5);
+      this->holdToPosition(300);
       break;
     case low:
       this->holdToPosition(LOW_LEVEL_POT_PRESET);
@@ -125,6 +127,6 @@ void Lift::calibrate() {
   this->liftPotentiometer.calibrate();
 }
 
-std::int32_t Lift::getLiftPotentiometerValue() {
-  return this->liftPotentiometer.get_value_calibrated();
+int Lift::getLiftPotentiometerValue() {
+  return this->liftPotentiometer.get_value();
 }

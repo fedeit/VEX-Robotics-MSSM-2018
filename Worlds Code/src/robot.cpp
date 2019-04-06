@@ -2,7 +2,7 @@
 #include "robot.hpp"
 
 void Robot::calibrate() {
-  robot.lift.calibrate();
+  // Calibration
 }
 
 Robot robot = Robot();
