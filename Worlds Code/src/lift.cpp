@@ -2,97 +2,95 @@
 #include "robot.hpp"
 #include "stdio.h"
 
-void Lift::holdToPosition(long int position) {
-  while (abs(this->getLiftPotentiometerValue() - position) > 30) {
-    while (this->getLiftPotentiometerValue() < position - 30){
-      this->extend(std::min((long int)127, std::max((long int)25, ((long int)position - this->getLiftPotentiometerValue())/3)));
-      pros::delay(2);
-    }
+int Lift::getLiftVoltage() {
+  if (abs(this->prevLiftPotValue - this->currLiftPotValue) < 10 && this->liftStatus != Status::rest) {
+    return 0;
+  }
+  else {
+    int error = this->currLiftPotValue - this->liftTargetPos;
+    return error > 0 ? max(-127, error / PCONST) : min(127, error / PCONST);
+  }
+}
 
-    while (this->getLiftPotentiometerValue() > position + 30){
-      std::cout << this->getLiftPotentiometerValue() << " " << position << "\n";
-      this->retract(std::min((long int)127, std::max((long int)25,  (this->getLiftPotentiometerValue() - (long int)position)/3)));
-      pros::delay(2);
-    }
+int Lift::getClawVoltage() {
+  if (abs(this->prevClawPotValue - this->currClawPotValue) < 10 && this->clawStatus != Status::rest) {
+    return 0;
+  }
+  else {
+    int error = this->currLiftPotValue - this->liftTargetPos;
+    return error > 0 ? max(-127, error / PCONST) : min(127, error / PCONST);
+  }
+}
+
+void Lift::update() {
+  this->prevLiftPotValue = this->currLiftPotValue;
+  this->currLiftPotValue = this->liftPotentiometer.get_value();
+
+  this->prevClawPotValue = this->currClawPotValue;
+  this->currClawPotValue = this->clawPotentiometer.get_value();
+
+  int liftVoltage = getLiftVoltage();
+  int clawVoltage = getClawVoltage();
+
+  if (liftVoltage == 0) {
+    this->clawStatus = Status::rest;
+    this->liftTargetPos = this->currLiftPotValue;
+  }
+  else {
+    this->liftStatus = Status::moving;
   }
 
-  this->stop();
+  if (clawVoltage == 0) {
+    this->liftStatus = Status::rest;
+    this->clawTargetPos = this->currClawPotValue;
+  }
+  else {
+    this->clawStatus = Status::moving;
+  }
+
+  this->liftMotorRight.move(liftVoltage);
+  this->liftMotorLeft.move(liftVoltage);
+
+  this->clawMotor.move(clawVoltage);
+}
+
+void Lift::hold() {
+  if (this->liftMode == LiftMode::manual){
+    this->liftTargetPos = this->liftPotentiometer.get_value();
+    this->liftMode = LiftMode::presets;
+  }
 }
 
 void Lift::lowPolePreset() {
-  while (abs(this->getLiftPotentiometerValue() - ABOVE_LOW_LEVEL_POT_PRESET) > 30) {
-    while (this->getLiftPotentiometerValue() < ABOVE_LOW_LEVEL_POT_PRESET - 30){
-      std::cout << this->getLiftPotentiometerValue() << " " << ABOVE_LOW_LEVEL_POT_PRESET << "\n";
-      this->extend(std::min((long int)127, std::max((long int)25, ((long int)ABOVE_LOW_LEVEL_POT_PRESET - this->getLiftPotentiometerValue())/3)));
-      pros::delay(2);
-    }
-
-    while (this->getLiftPotentiometerValue() > ABOVE_LOW_LEVEL_POT_PRESET + 30){
-      std::cout << this->getLiftPotentiometerValue() << " " << ABOVE_LOW_LEVEL_POT_PRESET << "\n";
-      this->retract(std::min((long int)127, std::max((long int)25,  (this->getLiftPotentiometerValue() - (long int)ABOVE_LOW_LEVEL_POT_PRESET)/3)));
-      pros::delay(2);
-    }
-  }
-
-  this->stop();
-  this->level = low;
+  this->liftTargetPos = LOW_POLE;
+  this->liftMode = LiftMode::presets;
 }
 
 void Lift::highPolePreset() {
-  while (this->liftPotentiometer.get_value() < ABOVE_HIGH_LEVEL_POT_PRESET - 15){
-    this->extend(127);
-    pros::delay(2);
-  }
-
-  this->stop();
-  this->level = high;
+  this->liftTargetPos = HIGH_POLE;
+  this->liftMode = LiftMode::presets;
 }
 
 void Lift::retractCompletely() {
-  while (this->liftPotentiometer.get_value() > GROUND_PRESET + 15) {
-    this->retract(127);
-    pros::delay(2);
-  }
-
-  this->stop();
-  this->level = zero;
+  this->liftTargetPos = LIFT_ZERO;
+  this->liftMode = LiftMode::presets;
 }
 
-void Lift::extend(unsigned int speed) {
+void Lift::extend(uint speed = 127) {
   this->liftMotorLeft.move(speed);
   this->liftMotorRight.move(speed);
+  this->liftMode = LiftMode::manual;
 }
 
-void Lift::retract(unsigned int speed) {
+void Lift::retract(uint speed = 127) {
   this->liftMotorLeft.move(-speed);
   this->liftMotorRight.move(-speed);
+  this->liftMode = LiftMode::manual;
 }
 
 void Lift::stop() {
   this->liftMotorLeft.move(0);
   this->liftMotorRight.move(0);
-}
-
-void Lift::holdToClosest() {
-  switch(this->level) {
-    case zero:
-      this->retractCompletely();
-      break;
-    case low:
-      this->holdToPosition(LOW_LEVEL_POT_PRESET);
-      break;
-    case high:
-      this->holdToPosition(HIGH_LEVEL_POT_PRESET);
-  }
-}
-
-void Lift::hold() {
-  if (this->holdMode == latest) {
-    this->holdToPosition(this->getLiftPotentiometerValue());
-  }
-  else {
-    this->holdToClosest();
-  }
 }
 
 void Lift::toggleUp() {
@@ -121,32 +119,15 @@ void Lift::toggleDown() {
   }
 }
 
-// Claw functions
-void Lift::flipClawBack() {
-  this->clawMotor.move_absolute(0, 200);
-  this->clawState = initial;
-}
-
-void Lift::flipClawForward() {
-  this->clawMotor.move_absolute(180, 200);
-  this->clawState = flipped;
-}
-
 void Lift::flipClaw() {
-  switch (this->clawState) {
-    case flipped:
-      flipClawBack();
-      break;
-    case initial:
-      flipClawForward();
-      break;
+  if (this->clawTargetPos == CLAW_ZERO) {
+    this->clawTargetPos = CLAW_FLIPPED;
+  }
+  else {
+    this->clawTargetPos = CLAW_ZERO;
   }
 }
 
 // Misc
 void Lift::calibrate() {
-}
-
-int Lift::getLiftPotentiometerValue() {
-  return this->liftPotentiometer.get_value();
 }

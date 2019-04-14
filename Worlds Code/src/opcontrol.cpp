@@ -17,12 +17,12 @@
 void debug_func() {
 	pros::lcd::print(1, "Lift potentiometer value:%d", robot.lift.getLiftPotentiometerValue());
 	pros::delay(10);
-	// std::printf("%d\n", robot.lift.getLiftPotentiometerValue());
+	std::printf("%d\n", robot.lift.getLiftPotentiometerValue());
 }
 
 void opcontrol() {
 	while (true) {
-		debug_func();
+		//debug_func()
 
 		// Drive control
 		robot.tankAssembly.moveLeftSide(robot.controller.get_analog(ANALOG_LEFT_Y));
@@ -30,42 +30,40 @@ void opcontrol() {
 
 		// Lift contol
 		if (robot.controller.get_digital(DIGITAL_X)) {
-			robot.lift.holdMode = latest;
-			robot.lift.extend(127);
+			robot.lift.extend();
 		}
 		else if (robot.controller.get_digital(DIGITAL_B)) {
-			robot.lift.holdMode = latest;
-			robot.lift.retract(127);
+			robot.lift.retract();
 		}
-		else if (robot.controller.get_digital(DIGITAL_R1)) {
-			robot.lift.highPolePreset();
-			robot.lift.holdMode = closest;
+		else if (robot.controller.get_digital_new_press(DIGITAL_R1)) {
+			robot.lift.highPole();
 		}
-		else if (robot.controller.get_digital(DIGITAL_R2)) {
-			robot.lift.lowPolePreset();
-			robot.lift.holdMode = closest;
+		else if (robot.controller.get_digital_new_press(DIGITAL_R2)) {
+			robot.lift.lowPole();
 		}
 		else if (robot.controller.get_digital_new_press(DIGITAL_L2)) {
 			robot.lift.retractCompletely();
-			robot.lift.holdMode = closest;
 		}
 		else {
-			robot.lift.holdToClosest();
+			robot.lift.hold();
 		}
 
-		// Claw control
 		if (robot.controller.get_digital_new_press(DIGITAL_L1)) {
-			robot.lift.flipClaw();
+			robot.flipClaw();
 		}
 
-		// CapFlipper
-		if (robot.controller.get_digital(DIGITAL_UP)) {
-			robot.capFlipper.spin(forward);
-		} else if (robot.controller.get_digital(DIGITAL_DOWN)) {
-			robot.capFlipper.spin(backward);
-		}
-		else {
-			robot.capFlipper.stop();
-		}
+		// // CapFlipper
+		// if (robot.controller.get_digital(DIGITAL_UP))
+		// 	robot.capFlipper.spin(forward);
+		// else if (robot.controller.get_digital(DIGITAL_DOWN)) {
+		// 	robot.capFlipper.spin(backward);
+		// }
+		// else {
+		// 	robot.capFlipper.stop();
+		// }
+
+		// ! DO NOT REMOVE THIS LINE ! //
+		robot.update();
+		pros::delay(10);
 	}
 }
