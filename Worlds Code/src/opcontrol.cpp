@@ -49,7 +49,7 @@ void opcontrol() {
 			robot.lift.flipClaw();
 		}
 
-		// // CapFlipper
+		// CapFlipper
 		// if (robot.controller.get_digital(DIGITAL_UP))
 		// 	robot.capFlipper.spin(forward);
 		// else if (robot.controller.get_digital(DIGITAL_DOWN)) {
@@ -59,8 +59,8 @@ void opcontrol() {
 		// 	robot.capFlipper.stop();
 		// }
 
-		// ! DO NOT REMOVE THIS LINE ! //
-		robot.update();
-		pros::delay(10);
+		//! DO NOT REMOVE THIS LINE ! //
+		// robot.update();
+		// pros::delay(10);
 	}
 }

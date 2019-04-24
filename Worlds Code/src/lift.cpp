@@ -7,8 +7,11 @@ int Lift::getLiftVoltage() {
     return 0;
   }
   else {
-    int error = this->currLiftPotValue - this->liftTargetPos;
-    return error < 0 ? std::max(int(-127), int(error / PCONST)) : std::min(int(127), int(error / PCONST));
+    int error = this->liftTargetPos - this->currLiftPotValue;
+    if (error < 10)
+      return 0;
+    int V = error < 0 ? std::max(int(-127), int(error / PCONST)) : std::min(int(127), int(error / PCONST));
+    return std::max(V, 30);
   }
 }
 
@@ -53,14 +56,12 @@ void Lift::retractCompletely() {
 }
 
 void Lift::extend(uint speed) {
-  this->liftMotorLeft.move(speed);
-  this->liftMotorRight.move(speed);
+  this->liftTargetPos = HIGH_POLE;
   this->liftMode = LiftMode::manual;
 }
 
 void Lift::retract(uint speed) {
-  this->liftMotorLeft.move(-speed);
-  this->liftMotorRight.move(-speed);
+  this->liftTargetPos = LIFT_ZERO;
   this->liftMode = LiftMode::manual;
 }
 
@@ -70,12 +71,12 @@ void Lift::stop() {
 }
 
 void Lift::flipClaw() {
-  if (clawState == ClawState::initial){
-    clawMotor.move_absolute(180, 200);
-    clawState = ClawState::flipped;
+  if (this->clawState == ClawState::initial){
+    this->clawMotor.move_absolute(400, 200);
+    this->clawState = ClawState::flipped;
   }
   else {
-    clawMotor.move_absolute(0, 200);
-    clawState = ClawState::initial;
+    this->clawMotor.move_absolute(0, 200);
+    this->clawState = ClawState::initial;
   }
 }

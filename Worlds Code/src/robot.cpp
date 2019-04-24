@@ -2,7 +2,7 @@
 #include "robot.hpp"
 
 void Robot::update() {
-  lift.update();
+  this->lift.update();
 }
 
 Robot robot = Robot();
