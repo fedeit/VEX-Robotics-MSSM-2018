@@ -19,6 +19,7 @@ public:
 
     void runDisplaySetup();
     void calibrate();
+    void update();
 };
 
 extern Robot robot;

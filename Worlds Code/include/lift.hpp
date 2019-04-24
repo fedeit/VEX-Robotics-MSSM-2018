@@ -42,8 +42,6 @@ enum class ClawState {
 class Lift {
 private:
   uint liftTargetPos = LIFT_ZERO;
-  uint clawTargetPos = CLAW_ZERO;
-
   uint currLiftPotValue = LIFT_ZERO;
   uint prevLiftPotValue = LIFT_ZERO;
 
@@ -51,7 +49,6 @@ private:
   Status liftStatus = Status::moving;
 
   ClawState clawState = ClawState::initial;
-  Status clawStatus = Status::moving;
 
   Motor liftMotorLeft = Motor(2, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
   Motor liftMotorRight = Motor(9, E_MOTOR_GEARSET_36, true, E_MOTOR_ENCODER_DEGREES);

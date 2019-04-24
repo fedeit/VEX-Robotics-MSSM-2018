@@ -8,7 +8,7 @@ int Lift::getLiftVoltage() {
   }
   else {
     int error = this->currLiftPotValue - this->liftTargetPos;
-    return error > 0 ? std::max(int(-127), int(error / PCONST)) : std::min(int(127), int(error / PCONST));
+    return error < 0 ? std::max(int(-127), int(error / PCONST)) : std::min(int(127), int(error / PCONST));
   }
 }
 
@@ -19,7 +19,7 @@ void Lift::update() {
   int liftVoltage = getLiftVoltage();
 
   if (liftVoltage == 0) {
-    this->clawStatus = Status::rest;
+    this->liftStatus = Status::rest;
     this->liftTargetPos = this->currLiftPotValue;
   }
   else {
@@ -52,13 +52,13 @@ void Lift::retractCompletely() {
   this->liftMode = LiftMode::presets;
 }
 
-void Lift::extend(uint speed = 127) {
+void Lift::extend(uint speed) {
   this->liftMotorLeft.move(speed);
   this->liftMotorRight.move(speed);
   this->liftMode = LiftMode::manual;
 }
 
-void Lift::retract(uint speed = 127) {
+void Lift::retract(uint speed) {
   this->liftMotorLeft.move(-speed);
   this->liftMotorRight.move(-speed);
   this->liftMode = LiftMode::manual;

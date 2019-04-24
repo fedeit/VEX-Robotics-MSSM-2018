@@ -1,8 +1,8 @@
 #include "main.h"
 #include "robot.hpp"
 
-void Robot::calibrate() {
-  // Calibration
+void Robot::update() {
+  lift.update();
 }
 
 Robot robot = Robot();
