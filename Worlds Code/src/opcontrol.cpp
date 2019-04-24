@@ -15,9 +15,6 @@
  * task, not resume it from where it left off.
  */
 void debug_func() {
-	pros::lcd::print(1, "Lift potentiometer value:%d", robot.lift.getLiftPotentiometerValue());
-	pros::delay(10);
-	std::printf("%d\n", robot.lift.getLiftPotentiometerValue());
 }
 
 void opcontrol() {
@@ -29,41 +26,41 @@ void opcontrol() {
 		robot.tankAssembly.moveRightSide(robot.controller.get_analog(ANALOG_RIGHT_Y));
 
 		// Lift contol
-		if (robot.controller.get_digital(DIGITAL_X)) {
-			robot.lift.extend();
-		}
-		else if (robot.controller.get_digital(DIGITAL_B)) {
-			robot.lift.retract();
-		}
-		else if (robot.controller.get_digital_new_press(DIGITAL_R1)) {
-			robot.lift.highPole();
-		}
-		else if (robot.controller.get_digital_new_press(DIGITAL_R2)) {
-			robot.lift.lowPole();
-		}
-		else if (robot.controller.get_digital_new_press(DIGITAL_L2)) {
-			robot.lift.retractCompletely();
-		}
-		else {
-			robot.lift.hold();
-		}
-
-		if (robot.controller.get_digital_new_press(DIGITAL_L1)) {
-			robot.flipClaw();
-		}
-
-		// // CapFlipper
-		// if (robot.controller.get_digital(DIGITAL_UP))
-		// 	robot.capFlipper.spin(forward);
-		// else if (robot.controller.get_digital(DIGITAL_DOWN)) {
-		// 	robot.capFlipper.spin(backward);
+		// if (robot.controller.get_digital(DIGITAL_X)) {
+		// 	robot.lift.extend();
+		// }
+		// else if (robot.controller.get_digital(DIGITAL_B)) {
+		// 	robot.lift.retract();
+		// }
+		// else if (robot.controller.get_digital_new_press(DIGITAL_R1)) {
+		// 	robot.lift.highPole();
+		// }
+		// else if (robot.controller.get_digital_new_press(DIGITAL_R2)) {
+		// 	robot.lift.lowPole();
+		// }
+		// else if (robot.controller.get_digital_new_press(DIGITAL_L2)) {
+		// 	robot.lift.retractCompletely();
 		// }
 		// else {
-		// 	robot.capFlipper.stop();
+		// 	robot.lift.hold();
 		// }
-
-		// ! DO NOT REMOVE THIS LINE ! //
-		robot.update();
-		pros::delay(10);
+		//
+		// if (robot.controller.get_digital_new_press(DIGITAL_L1)) {
+		// 	robot.flipClaw();
+		// }
+		//
+		// // // CapFlipper
+		// // if (robot.controller.get_digital(DIGITAL_UP))
+		// // 	robot.capFlipper.spin(forward);
+		// // else if (robot.controller.get_digital(DIGITAL_DOWN)) {
+		// // 	robot.capFlipper.spin(backward);
+		// // }
+		// // else {
+		// // 	robot.capFlipper.stop();
+		// // }
+		//
+		// // ! DO NOT REMOVE THIS LINE ! //
+		// robot.update();
+		// pros::delay(10);
 	}
 }

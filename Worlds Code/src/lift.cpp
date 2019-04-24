@@ -8,17 +8,7 @@ int Lift::getLiftVoltage() {
   }
   else {
     int error = this->currLiftPotValue - this->liftTargetPos;
-    return error > 0 ? max(-127, error / PCONST) : min(127, error / PCONST);
-  }
-}
-
-int Lift::getClawVoltage() {
-  if (abs(this->prevClawPotValue - this->currClawPotValue) < 10 && this->clawStatus != Status::rest) {
-    return 0;
-  }
-  else {
-    int error = this->currLiftPotValue - this->liftTargetPos;
-    return error > 0 ? max(-127, error / PCONST) : min(127, error / PCONST);
+    return error > 0 ? std::max(int(-127), int(error / PCONST)) : std::min(int(127), int(error / PCONST));
   }
 }
 
@@ -26,11 +16,7 @@ void Lift::update() {
   this->prevLiftPotValue = this->currLiftPotValue;
   this->currLiftPotValue = this->liftPotentiometer.get_value();
 
-  this->prevClawPotValue = this->currClawPotValue;
-  this->currClawPotValue = this->clawPotentiometer.get_value();
-
   int liftVoltage = getLiftVoltage();
-  int clawVoltage = getClawVoltage();
 
   if (liftVoltage == 0) {
     this->clawStatus = Status::rest;
@@ -40,18 +26,8 @@ void Lift::update() {
     this->liftStatus = Status::moving;
   }
 
-  if (clawVoltage == 0) {
-    this->liftStatus = Status::rest;
-    this->clawTargetPos = this->currClawPotValue;
-  }
-  else {
-    this->clawStatus = Status::moving;
-  }
-
   this->liftMotorRight.move(liftVoltage);
   this->liftMotorLeft.move(liftVoltage);
-
-  this->clawMotor.move(clawVoltage);
 }
 
 void Lift::hold() {
@@ -93,41 +69,13 @@ void Lift::stop() {
   this->liftMotorRight.move(0);
 }
 
-void Lift::toggleUp() {
-  switch (this->level) {
-    case zero:
-      lowPolePreset();
-      break;
-    case low:
-      highPolePreset();
-      break;
-    case high:
-      break;
-  }
-}
-
-void Lift::toggleDown() {
-  switch (this->level) {
-    case zero:
-      break;
-    case low:
-      retractCompletely();
-      break;
-    case high:
-      lowPolePreset();
-      break;
-  }
-}
-
 void Lift::flipClaw() {
-  if (this->clawTargetPos == CLAW_ZERO) {
-    this->clawTargetPos = CLAW_FLIPPED;
+  if (clawState == ClawState::initial){
+    clawMotor.move_absolute(180, 200);
+    clawState = ClawState::flipped;
   }
   else {
-    this->clawTargetPos = CLAW_ZERO;
+    clawMotor.move_absolute(0, 200);
+    clawState = ClawState::initial;
   }
-}
-
-// Misc
-void Lift::calibrate() {
 }
