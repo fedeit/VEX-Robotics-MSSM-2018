@@ -15,9 +15,6 @@
  * task, not resume it from where it left off.
  */
 void debug_func() {
-	pros::lcd::print(1, "Lift potentiometer value:%d", robot.lift.getLiftPotentiometerValue());
-	pros::delay(10);
-	std::printf("%d\n", robot.lift.getLiftPotentiometerValue());
 }
 
 void opcontrol() {
@@ -25,21 +22,21 @@ void opcontrol() {
 		//debug_func()
 
 		// Drive control
-		robot.tankAssembly.moveLeftSide(robot.controller.get_analog(ANALOG_LEFT_Y));
 		robot.tankAssembly.moveRightSide(robot.controller.get_analog(ANALOG_RIGHT_Y));
+		robot.tankAssembly.moveLeftSide(robot.controller.get_analog(ANALOG_LEFT_Y));
 
 		// Lift contol
 		if (robot.controller.get_digital(DIGITAL_X)) {
-			robot.lift.extend();
+			robot.lift.extend(127);
 		}
 		else if (robot.controller.get_digital(DIGITAL_B)) {
-			robot.lift.retract();
+			robot.lift.retract(127);
 		}
 		else if (robot.controller.get_digital_new_press(DIGITAL_R1)) {
-			robot.lift.highPole();
+			robot.lift.highPolePreset();
 		}
 		else if (robot.controller.get_digital_new_press(DIGITAL_R2)) {
-			robot.lift.lowPole();
+			robot.lift.lowPolePreset();
 		}
 		else if (robot.controller.get_digital_new_press(DIGITAL_L2)) {
 			robot.lift.retractCompletely();
@@ -49,10 +46,10 @@ void opcontrol() {
 		}
 
 		if (robot.controller.get_digital_new_press(DIGITAL_L1)) {
-			robot.flipClaw();
+			robot.lift.flipClaw();
 		}
 
-		// // CapFlipper
+		// CapFlipper
 		// if (robot.controller.get_digital(DIGITAL_UP))
 		// 	robot.capFlipper.spin(forward);
 		// else if (robot.controller.get_digital(DIGITAL_DOWN)) {
@@ -62,8 +59,8 @@ void opcontrol() {
 		// 	robot.capFlipper.stop();
 		// }
 
-		// ! DO NOT REMOVE THIS LINE ! //
-		robot.update();
-		pros::delay(10);
+		//! DO NOT REMOVE THIS LINE ! //
+		// robot.update();
+		// pros::delay(10);
 	}
 }

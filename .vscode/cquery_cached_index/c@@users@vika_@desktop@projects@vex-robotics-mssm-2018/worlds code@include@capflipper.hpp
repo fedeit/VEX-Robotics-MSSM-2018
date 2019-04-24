@@ -8,7 +8,7 @@ using namespace pros;
 
 class CapFlipper {
 private:
-  Motor motor = Motor(8, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
+  Motor motor = Motor(6, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
 public:
   void spin(Direction dir);
   void stop();

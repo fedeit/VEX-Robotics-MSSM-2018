@@ -11,6 +11,7 @@
 
 class Robot {
 public:
+    void initialize();
     pros::Controller controller = pros::Controller(pros::E_CONTROLLER_MASTER);
     CapFlipper capFlipper = CapFlipper();
     Lift lift = Lift();
@@ -19,8 +20,8 @@ public:
 
     void runDisplaySetup();
     void calibrate();
+    void update();
 };
 
 extern Robot robot;
-
 #endif
