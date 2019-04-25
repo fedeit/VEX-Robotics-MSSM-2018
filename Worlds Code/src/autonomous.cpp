@@ -1,4 +1,5 @@
 #include "main.h"
+#include "robot.hpp"
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -11,4 +12,14 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+  // Cap 1
+  robot.tankAssembly.goToPosition(2, 1);
+  robot.tankAssembly.pickupCap();
+  robot.lift.goToPreset(LiftLevel::high);
+  robot.robotSensors.autoRotateCap();
+  robot.tankAssembly.goToPosition(0, 1);
+  robot.tankAssembly.releaseCap();
+
+  // Cap 2...
+}

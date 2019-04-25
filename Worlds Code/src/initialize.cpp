@@ -8,6 +8,7 @@
  */
 void initialize() {
 	pros::lcd::initialize();
+	Task my_task(robot.lift.newPTask, &robot.lift);
 }
 
 /**

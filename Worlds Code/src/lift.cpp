@@ -1,86 +1,94 @@
 #include "lift.hpp"
 #include "robot.hpp"
 #include "stdio.h"
+#include <cmath>
 
-int Lift::getLiftVoltage() {
-  if (abs(this->prevLiftPotValue - this->currLiftPotValue) < 50 && this->liftStatus != Status::rest) {
-    return 0;
-  }
-  else {
-    int error = this->liftTargetPos - this->currLiftPotValue;
-    if (abs(error) < 50)
-      return 0;
-    return error < 0 ? std::min(int(-40), std::max(int(-127), int(error / PCONST))) : std::max(int(40), std::min(int(127), int(error / PCONST)));
-  }
+Lift::Lift() {
+
 }
-
-void Lift::update() {
-  this->prevLiftPotValue = this->currLiftPotValue;
-  this->currLiftPotValue = this->liftPotentiometer.get_value();
-
-  if (this->liftMode == LiftMode::manual)
-    return;
-
-  int liftVoltage = getLiftVoltage();
-
-  if (liftVoltage == 0) {
-    this->liftStatus = Status::rest;
-    this->liftTargetPos = this->currLiftPotValue;
-  }
-  else {
-    this->liftStatus = Status::moving;
-  }
-
-  this->liftMotorRight.move(liftVoltage);
-  this->liftMotorLeft.move(liftVoltage);
-}
-
-void Lift::hold() {
-  if (this->liftMode == LiftMode::manual){
-    this->liftTargetPos = this->liftPotentiometer.get_value();
-    this->liftMode = LiftMode::presets;
-  }
-}
-
-void Lift::lowPolePreset() {
-  this->liftTargetPos = LOW_POLE;
-  this->liftMode = LiftMode::presets;
-}
-
-void Lift::highPolePreset() {
-  this->liftTargetPos = HIGH_POLE;
-  this->liftMode = LiftMode::presets;
-}
-
-void Lift::retractCompletely() {
-  this->liftTargetPos = LIFT_ZERO;
-  this->liftMode = LiftMode::presets;
-}
-
-void Lift::extend() {
-  this->liftMotorRight.move(127);
-  this->liftMotorLeft.move(127);
-  this->liftMode = LiftMode::manual;
-}
-
-void Lift::retract() {
-  this->liftMotorRight.move(-127);
-  this->liftMotorLeft.move(-127);
-  this->liftMode = LiftMode::manual;
-}
-
+// Manual control
 void Lift::stop() {
-  this->liftMotorLeft.move(0);
-  this->liftMotorRight.move(0);
+  liftLeft.set_brake_mode(MOTOR_BRAKE_HOLD);
+  liftRight.set_brake_mode(MOTOR_BRAKE_HOLD);
+  liftLeft.move_velocity(0);
+  liftRight.move_velocity(0);
+}
+
+void Lift::manualUp() {
+  targetPosition = 9000;
+  liftLeft.move_velocity(200);
+  liftRight.move_velocity(200);
+}
+
+void Lift::manualDown() {
+  targetPosition = 9000;
+  liftLeft.move_velocity(-200);
+  liftRight.move_velocity(-200);
+}
+
+// Presets
+// Goto function should only be called on new press, check controller press
+void Lift::goToPreset(LiftLevel preset) {
+  switch (preset) {
+     case LiftLevel::zero:
+     targetPosition = GROUND_PRESET;
+     break;
+     case LiftLevel::low:
+     targetPosition = LOW_LEVEL_PRESET;
+     break;
+     case LiftLevel::high:
+     targetPosition = HIGH_LEVEL_PRESET;
+     break;
+  }
+}
+
+void Lift::newPTask(void* self_p) {
+  Lift* self = (Lift*)self_p;
+  while (true) {
+    std::cout << "target: " << self->targetPosition << std::endl;
+    if (self->targetPosition == 9000)
+      continue;
+
+    int error = self->targetPosition - self->liftPotentiometer.get_value();
+    int speed = error < 0 ? std::min(int(-60), std::max(int(-200), int(error * 0.05)))
+                                : std::max(int(60), std::min(int(200), int(error * 0.05)));
+    std::cout << "error: " << speed << std::endl;
+    std::cout << "speed: " << error << std::endl;
+
+    if (abs(error) < 60) {
+      self->liftLeft.move_velocity(0);
+      self->liftRight.move_velocity(0);
+      self->targetPosition = 9000;
+      continue;
+    }
+
+    self->liftLeft.move_velocity(speed);
+    self->liftRight.move_velocity(speed);
+
+    pros::Task::delay(5);
+  }
+}
+
+// Claw functions
+void Lift::flipClawBack() {
+  this->clawMotor.set_brake_mode(MOTOR_BRAKE_HOLD);
+  this->clawMotor.move_absolute(0, 200);
+  this->clawState = ClawState::initial;
+}
+
+void Lift::flipClawForward() {
+  this->clawMotor.set_brake_mode(MOTOR_BRAKE_HOLD);
+  this->clawMotor.move_absolute(180, 200);
+  this->clawState = ClawState::flipped;
 }
 
 void Lift::flipClaw() {
-  if (this->clawState == ClawState::initial){
-    this->clawMotor.move_absolute(-180, 200);
-    this->clawState = ClawState::flipped;
-  }
-  else {
-    this->clawMotor.move_absolute(0, 200);
-    this->clawState = ClawState::initial;
+  switch (this->clawState) {
+    case ClawState::flipped:
+      flipClawBack();
+      break;
+    case ClawState::initial:
+      flipClawForward();
+      break;
   }
 }

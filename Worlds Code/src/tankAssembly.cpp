@@ -1,6 +1,7 @@
 #include "main.h"
 #include "robot.hpp"
 #include "tankAssembly.hpp"
+#include "tgmath.h"
 
 void TankAssembly::moveBase(std::int8_t velocity) {
   moveLeftSide(velocity);
@@ -17,19 +18,33 @@ void TankAssembly::moveRightSide(std::int8_t velocity) {
   this->motorRightFront.move(velocity);
 }
 
-// Move by specified relative position
-// Used in autonomous
-void TankAssembly::moveBase(int speed, double distance) {
-  this->moveLeftSide(speed, distance);
-  this->moveRightSide(speed, distance);
+void TankAssembly::pickupCap() {
+
 }
 
-void TankAssembly::moveLeftSide(int velocity, double distance) {
-  this->motorLeftFront.move_relative(distance, velocity);
-  this->motorLeftBack.move_relative(distance, velocity);
+void TankAssembly::releaseCap() {
+  robot.lift.stop();
+  // Might need to drive the lift up by a few degrees to release cap
 }
 
-void TankAssembly::moveRightSide(int  velocity, double distance) {
-  this->motorRightFront.move_relative(distance, velocity);
-  this->motorRightBack.move_relative(distance, velocity);
+void TankAssembly::goToPosition(int targetX, int targetY) {
+  float dx = targetX - currentX;
+  float dy = targetY - currentY;
+  float r = sqrt(dx*dx+dy*dy);
+  float targetAngle = atan(dy/dx);
+  turnByAngle(targetAngle - currentAngle);
+  driveStraightBy(r);
+}
+
+void TankAssembly::driveStraightBy(float distance) {
+  if (robot.robotSensors.sonarDistance() < 20) {
+    // Make speed 70% when less than 20 cm from impact
+  }
+  if (robot.robotSensors.didReachPole()) {
+    this->moveBase(0);
+  }
+}
+
+void TankAssembly::turnByAngle(float angle) {
+
 }

@@ -1,6 +1,5 @@
 #include "main.h"
 #include "robot.hpp"
-#include "api.h"
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -15,54 +14,53 @@
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void debug_func() {
-	std::printf("%d\n", robot.lift.liftPotentiometer.get_value());
-}
 
 void opcontrol() {
 	while (true) {
-		debug_func();
-
 		// Drive control
-		robot.tankAssembly.moveRightSide(robot.controller.get_analog(ANALOG_RIGHT_Y));
 		robot.tankAssembly.moveLeftSide(robot.controller.get_analog(ANALOG_LEFT_Y));
+		robot.tankAssembly.moveRightSide(robot.controller.get_analog(ANALOG_RIGHT_Y));
 
 		// Lift contol
 		if (robot.controller.get_digital(DIGITAL_X)) {
-			robot.lift.extend();
-		}
-		else if (robot.controller.get_digital(DIGITAL_B)) {
-			robot.lift.retract();
-		}
-		else if (robot.controller.get_digital_new_press(DIGITAL_R1)) {
-			robot.lift.highPolePreset();
-		}
-		else if (robot.controller.get_digital_new_press(DIGITAL_R2)) {
-			robot.lift.lowPolePreset();
-		}
-		else if (robot.controller.get_digital_new_press(DIGITAL_L2)) {
-			robot.lift.retractCompletely();
-		}
-		else {
-			robot.lift.hold();
+			robot.lift.manualUp();
+		} else if (robot.controller.get_digital(DIGITAL_B)) {
+			robot.lift.manualDown();
+		} else if (robot.controller.get_digital_new_press(DIGITAL_R1)) {
+			robot.lift.goToPreset(LiftLevel::high);
+		} else if (robot.controller.get_digital_new_press(DIGITAL_R2)) {
+			robot.lift.goToPreset(LiftLevel::low);
+		} else if (robot.controller.get_digital_new_press(DIGITAL_L2)) {
+			robot.lift.goToPreset(LiftLevel::zero);
+		} else if (robot.lift.targetPosition == 9000) {
+			robot.lift.stop();
 		}
 
+		// Claw control
 		if (robot.controller.get_digital_new_press(DIGITAL_L1)) {
 			robot.lift.flipClaw();
 		}
 
 		// CapFlipper
-		if (robot.controller.get_digital(DIGITAL_UP))
+		if (robot.controller.get_digital(DIGITAL_UP)) {
 			robot.capFlipper.spin(forward);
-		else if (robot.controller.get_digital(DIGITAL_DOWN)) {
+		} else if (robot.controller.get_digital(DIGITAL_DOWN)) {
 			robot.capFlipper.spin(backward);
-		}
-		else {
+		} else {
 			robot.capFlipper.stop();
 		}
-
-		//! DO NOT REMOVE THIS LINE ! //
-		robot.update();
-		pros::delay(10);
 	}
 }
+
+// while (true) {
+// 	pros::ADIButton poleButton = pros::ADIButton('F');
+// 	if (poleButton.get_value() == 1) {
+// 		std::cout << "Pressed" << std::endl;
+// 	}
+//
+// 	pros::Vision capVisionSensor = pros::Vision(1);
+// 	pros::vision_signature redCapObject = capVisionSensor.get_signature(1);
+// 	pros::vision_signature blueCapObject = capVisionSensor.get_signature(0);
+// 	std::cout << redCapObject.id << std::endl;
+// 	std::cout << blueCapObject.id << std::endl;
+// }
