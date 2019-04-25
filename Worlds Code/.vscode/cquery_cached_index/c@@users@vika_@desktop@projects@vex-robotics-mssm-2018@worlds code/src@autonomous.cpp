@@ -1,4 +1,6 @@
 #include "main.h"
+#include "robot.hpp"
+#include "auto_conf.hpp"
 
 /**
  * Runs the user autonomous code. This function will be started in its own task
@@ -11,4 +13,27 @@
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
-void autonomous() {}
+void autonomous() {
+  int colorConst = teamColor == TeamColor::red ? -1 : 1;
+  if (autoType == AutoType::match) {
+    if (startPos == StartingPosition::back) {
+      robot.tankAssembly.driveStraightByTiles(-1);
+      robot.tankAssembly.turnByAngle(colorConst*90);
+      robot.tankAssembly.driveStraightBy(-24); // inches
+    } else {
+      robot.tankAssembly.driveStraightByTiles(1);
+      robot.tankAssembly.turnByAngle(colorConst*90);
+      robot.tankAssembly.driveStraightBy(-24); // inches
+    }
+  } else {
+    if (startPos == StartingPosition::back) {
+      robot.tankAssembly.driveStraightByTiles(-1);
+      robot.tankAssembly.turnByAngle(colorConst*90);
+      robot.tankAssembly.driveStraightBy(-42); // inches
+    } else {
+      robot.tankAssembly.driveStraightByTiles(1);
+      robot.tankAssembly.turnByAngle(colorConst*90);
+      robot.tankAssembly.driveStraightBy(-42); // inches
+    }
+  }
+}

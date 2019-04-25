@@ -1,6 +1,7 @@
 #include "main.h"
 #include "robot.hpp"
 #include "tankAssembly.hpp"
+#include <cmath>
 
 void TankAssembly::moveBase(std::int8_t velocity) {
   moveLeftSide(velocity);
@@ -17,19 +18,30 @@ void TankAssembly::moveRightSide(std::int8_t velocity) {
   this->motorRightFront.move(velocity);
 }
 
-// Move by specified relative position
-// Used in autonomous
-void TankAssembly::moveBase(int speed, double distance) {
-  this->moveLeftSide(speed, distance);
-  this->moveRightSide(speed, distance);
+void TankAssembly::driveStraightBy(double distance) {
+  this->motorLeftBack.move_relative(distance*IN_R, 200);
+  this->motorLeftBack.move_relative(distance*IN_R, 200);
+  this->motorLeftBack.move_relative(distance*IN_R, 200);
+  this->motorLeftBack.move_relative(distance*IN_R, 200);
 }
 
-void TankAssembly::moveLeftSide(int velocity, double distance) {
-  this->motorLeftFront.move_relative(distance, velocity);
-  this->motorLeftBack.move_relative(distance, velocity);
+void TankAssembly::goToPosition(double targetX, double targetY) {
+  double dx = targetX - this->currentX;
+  double dy = targetY - this->currentY;
+  double r = sqrt(dx*dx+dy*dy);
+  try { // Will work if not both dy and dx zero
+    float dAngle = atan2(dy, dx);
+    turnByAngle(dAngle);
+    driveStraightBy(r);
+    this->currentX = targetX;
+    this->currentY = targetY;
+  } catch (int e) {};
 }
 
-void TankAssembly::moveRightSide(int  velocity, double distance) {
-  this->motorRightFront.move_relative(distance, velocity);
-  this->motorRightBack.move_relative(distance, velocity);
+void TankAssembly::turnByAngle(double angle) {
+  int rotations = (D_ROBOT*angle/2)/(D_WHEEL*_PI);
+  this->motorLeftFront.move_relative(-rotations, 200);
+  this->motorLeftBack.move_relative(-rotations, 200);
+  this->motorRightFront.move_relative(rotations, 200);
+  this->motorRightBack.move_relative(rotations, 200);
 }

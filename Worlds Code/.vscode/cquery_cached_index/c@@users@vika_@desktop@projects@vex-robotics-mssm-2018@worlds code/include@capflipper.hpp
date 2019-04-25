@@ -4,9 +4,11 @@
 #include "direction.hpp"
 #include "api.h"
 
+using namespace pros;
+
 class CapFlipper {
 private:
-  pros::Motor motor = pros::Motor(6, pros::E_MOTOR_GEARSET_36, false, pros::E_MOTOR_ENCODER_DEGREES);
+  Motor motor = Motor(5, E_MOTOR_GEARSET_36, false, E_MOTOR_ENCODER_DEGREES);
 public:
   void spin(Direction dir);
   void stop();

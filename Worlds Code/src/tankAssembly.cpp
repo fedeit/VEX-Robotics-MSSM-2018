@@ -1,7 +1,7 @@
 #include "main.h"
 #include "robot.hpp"
 #include "tankAssembly.hpp"
-#include "tgmath.h"
+#include <cmath>
 
 void TankAssembly::moveBase(std::int8_t velocity) {
   moveLeftSide(velocity);
@@ -18,33 +18,30 @@ void TankAssembly::moveRightSide(std::int8_t velocity) {
   this->motorRightFront.move(velocity);
 }
 
-void TankAssembly::pickupCap() {
-
+void TankAssembly::driveStraightBy(double distance) {
+  this->motorLeftBack.move_relative(distance*IN_R, 200);
+  this->motorLeftBack.move_relative(distance*IN_R, 200);
+  this->motorLeftBack.move_relative(distance*IN_R, 200);
+  this->motorLeftBack.move_relative(distance*IN_R, 200);
 }
 
-void TankAssembly::releaseCap() {
-  robot.lift.stop();
-  // Might need to drive the lift up by a few degrees to release cap
+void TankAssembly::goToPosition(double targetX, double targetY) {
+  double dx = targetX - this->currentX;
+  double dy = targetY - this->currentY;
+  double r = sqrt(dx*dx+dy*dy);
+  try { // Will work if not both dy and dx zero
+    float dAngle = atan2(dy, dx);
+    turnByAngle(dAngle);
+    driveStraightBy(r);
+    this->currentX = targetX;
+    this->currentY = targetY;
+  } catch (int e) {};
 }
 
-void TankAssembly::goToPosition(int targetX, int targetY) {
-  float dx = targetX - currentX;
-  float dy = targetY - currentY;
-  float r = sqrt(dx*dx+dy*dy);
-  float targetAngle = atan(dy/dx);
-  turnByAngle(targetAngle - currentAngle);
-  driveStraightBy(r);
-}
-
-void TankAssembly::driveStraightBy(float distance) {
-  if (robot.robotSensors.sonarDistance() < 20) {
-    // Make speed 70% when less than 20 cm from impact
-  }
-  if (robot.robotSensors.didReachPole()) {
-    this->moveBase(0);
-  }
-}
-
-void TankAssembly::turnByAngle(float angle) {
-
+void TankAssembly::turnByAngle(double angle) {
+  int rotations = (D_ROBOT*angle/2)/(D_WHEEL*_PI);
+  this->motorLeftFront.move_relative(-rotations, 200);
+  this->motorLeftBack.move_relative(-rotations, 200);
+  this->motorRightFront.move_relative(rotations, 200);
+  this->motorRightBack.move_relative(rotations, 200);
 }

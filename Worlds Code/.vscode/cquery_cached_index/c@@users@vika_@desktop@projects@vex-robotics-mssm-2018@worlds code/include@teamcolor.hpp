@@ -3,7 +3,8 @@
 
 enum class TeamColor {
     red,
-    blue
+    blue,
+    none
 };
 
 #endif
