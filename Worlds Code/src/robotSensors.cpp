@@ -1,7 +1,6 @@
 #include "main.h"
 #include "robot.hpp"
 #include "robotSensors.hpp"
-#include "auto_conf.hpp"
 
 
 bool RobotSensors::isCapOrientationCorrect() {
@@ -11,7 +10,7 @@ bool RobotSensors::isCapOrientationCorrect() {
   if (redCapObject.signature ==  33) capColor = TeamColor::blue;
   if (blueCapObject.signature == 33) capColor = TeamColor::none;
 
-  if (teamColor == capColor || capColor == TeamColor::none) {
+  if (robot.teamColor == capColor || capColor == TeamColor::none) {
     return true;
   } else {
     return false;

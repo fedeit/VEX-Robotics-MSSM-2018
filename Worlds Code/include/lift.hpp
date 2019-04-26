@@ -46,6 +46,8 @@ public:
   // Flip
   void flipClaw();
   void releaseCap();
+  void tiltClaw();
+  bool isClawTilted = false;
 };
 
 #endif

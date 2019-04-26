@@ -1,15 +1,15 @@
 #ifndef ROBOT_DISPLAY_HPP
 #define ROBOT_DISPLAY_HPP
 
-#include <map>
+#include "teamColor.hpp"
+#include "startingPosition.hpp"
 
-enum class Button {
-  left,
-  middle,
-  right,
-  None
+class Display {
+public:
+    TeamColor chooseTeamColor();
+    StartingPosition chooseStartingTile();
+    bool checkColor();
+    bool checkTile();
 };
-
-Button autoSelection(char* name, const std::map <Button, char*> btnStrings);
 
 #endif

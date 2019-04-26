@@ -16,10 +16,30 @@
  */
 
 void opcontrol() {
+	bool reversed = false;
+	pros::Motor motorLeftFront = pros::Motor(16, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+	pros::Motor motorLeftBack = pros::Motor(17, pros::E_MOTOR_GEARSET_18, false, pros::E_MOTOR_ENCODER_DEGREES);
+	pros::Motor motorRightFront = pros::Motor(10, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+	pros::Motor motorRightBack  = pros::Motor(5, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
+	pros::Controller controller = pros::Controller(pros::E_CONTROLLER_MASTER);
+
 	while (true) {
 		// Drive control
-		robot.tankAssembly.moveLeftSide(robot.controller.get_analog(ANALOG_LEFT_Y));
-		robot.tankAssembly.moveRightSide(robot.controller.get_analog(ANALOG_RIGHT_Y));
+		if (!reversed){
+			// robot.tankAssembly.moveLeftSide(robot.controller.get_analog(ANALOG_LEFT_Y));
+			// robot.tankAssembly.moveRightSide(robot.controller.get_analog(ANALOG_RIGHT_Y));
+			motorLeftBack = controller.get_analog(ANALOG_LEFT_Y);
+			motorLeftFront = controller.get_analog(ANALOG_LEFT_Y);
+			motorRightBack = controller.get_analog(ANALOG_RIGHT_Y);
+			motorRightFront = controller.get_analog(ANALOG_RIGHT_Y);
+		} else {
+			// robot.tankAssembly.moveRightSide(-robot.controller.get_analog(ANALOG_LEFT_Y));
+			// robot.tankAssembly.moveLeftSide(-robot.controller.get_analog(ANALOG_RIGHT_Y));
+			motorLeftBack = -controller.get_analog(ANALOG_RIGHT_Y);
+			motorLeftFront = -controller.get_analog(ANALOG_RIGHT_Y);
+			motorRightBack = -controller.get_analog(ANALOG_LEFT_Y);
+			motorRightFront = -controller.get_analog(ANALOG_LEFT_Y);
+		}
 
 		// Lift contol
 		if (robot.controller.get_digital(DIGITAL_X)) {
@@ -41,26 +61,12 @@ void opcontrol() {
 			robot.lift.flipClaw();
 		}
 
-		// CapFlipper
-		if (robot.controller.get_digital(DIGITAL_UP)) {
-			robot.capFlipper.spin(forward);
-		} else if (robot.controller.get_digital(DIGITAL_DOWN)) {
-			robot.capFlipper.spin(backward);
-		} else {
-			robot.capFlipper.stop();
+		if (robot.controller.get_digital_new_press(DIGITAL_LEFT)) {
+			reversed = !reversed;
+		}
+
+		if (robot.controller.get_digital_new_press(DIGITAL_A)) {
+			robot.lift.tiltClaw();
 		}
 	}
 }
-
-// while (true) {
-// 	pros::ADIButton poleButton = pros::ADIButton('F');
-// 	if (poleButton.get_value() == 1) {
-// 		std::cout << "Pressed" << std::endl;
-// 	}
-//
-// 	pros::Vision capVisionSensor = pros::Vision(1);
-// 	pros::vision_signature redCapObject = capVisionSensor.get_signature(1);
-// 	pros::vision_signature blueCapObject = capVisionSensor.get_signature(0);
-// 	std::cout << redCapObject.id << std::endl;
-// 	std::cout << blueCapObject.id << std::endl;
-// }

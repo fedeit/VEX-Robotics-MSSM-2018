@@ -50,11 +50,28 @@ void Lift::newPTask(void* self_p) {
       continue;
 
     int error = self->targetPosition - self->liftPotentiometer.get_value();
-    int speed = error < 0 ? std::min(int(-60), std::max(int(-200), int(error * 0.05)))
-                                : std::max(int(60), std::min(int(200), int(error * 0.05)));
+    // int speed = error < 0 ? std::min(int(-90), std::max(int(-200), int(error * 0.09)))
+    //                             : std::max(int(90), std::min(int(200), int(error * 0.09)));
+
+    int speed = error * 0.09;
+    // if (abs(speed) < 110) {
+    //   if (speed < 0)
+    //     speed = -200;
+    //   else
+    //     speed = 200;
+    // } else if (abs(speed) > 200){
+    //   if (speed < 0)
+    //     speed = -200;
+    //   else
+    //   speed = 200;
+    // }
+    if (error < 0) {
+      speed = -200;
+    } else {
+      speed = 200;
+    }
     std::cout << "error: " << speed << std::endl;
     std::cout << "speed: " << error << std::endl;
-
     if (abs(error) < 60) {
       self->liftLeft.move_velocity(0);
       self->liftRight.move_velocity(0);
@@ -90,5 +107,15 @@ void Lift::flipClaw() {
     case ClawState::initial:
       flipClawForward();
       break;
+  }
+}
+
+void Lift::tiltClaw() {
+  if (!isClawTilted) {
+    this->clawMotor.set_brake_mode(MOTOR_BRAKE_HOLD);
+    this->clawMotor.move_absolute(30, 200);
+    this->clawState = ClawState::flipped;
+  } else {
+    flipClawForward();
   }
 }

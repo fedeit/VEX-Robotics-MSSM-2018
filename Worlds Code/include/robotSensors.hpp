@@ -8,8 +8,8 @@ private:
   pros::Vision capVisionSensor = pros::Vision(1);
   pros::ADIButton poleButton = pros::ADIButton('F');
   pros::ADIUltrasonic sonar = pros::ADIUltrasonic('A', 'B');
-  bool isCapOrientationCorrect();
 public:
+  bool isCapOrientationCorrect();
   bool didReachPole();
   void autoRotateCap();
   int sonarDistance();
